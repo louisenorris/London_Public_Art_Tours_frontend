@@ -11,7 +11,8 @@ class App extends React.Component {
 
 
   state = {
-    user: null
+    user: null,
+    artworks: null
   }
   
   componentDidMount() {
@@ -19,6 +20,12 @@ class App extends React.Component {
     .then(user => {
       this.setState({user})
     })
+
+    API.getArtworks()
+    .then(artworks => {
+      this.setState({artworks})
+    })
+
   }
 
   signUp = user => {
@@ -42,10 +49,10 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>London Public Art Tours</h1>   
+        <h1 className="title">Public Art Tours</h1>   
         {
           this.state.user && !this.state.user.error ? (
-            <Route exact path='/' component={() => <MapContainer user={this.state.user} logOut={this.logOut}/>} />
+            <Route exact path='/' component={() => <MapContainer user={this.state.user} artworks={this.state.artworks} logOut={this.logOut}/>} />
           ) : (
             
             < NavBar user={this.state.user} signUp={this.signUp} logIn={this.logIn} />
