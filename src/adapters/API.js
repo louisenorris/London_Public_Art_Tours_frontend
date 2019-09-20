@@ -2,6 +2,7 @@ const endpoint = "http://localhost:3000"
 const signupURL = `${endpoint}/users`
 const loginURL = `${endpoint}/login`
 const validateURL = `${endpoint}/validate`
+const artworksURL = `${endpoint}/artworks`
 
 const jsonify = res => {
     if (res.ok)
@@ -58,10 +59,16 @@ const validateUser = () => {
 
 const clearToken = () => localStorage.removeItem('token')
 
+const getArtworks = () => {
+    return fetch(artworksURL)
+    .then(jsonify)
+}
+
 
 export default {
     signUp,
     logIn,
     validateUser,
-    clearToken
+    clearToken,
+    getArtworks
 }

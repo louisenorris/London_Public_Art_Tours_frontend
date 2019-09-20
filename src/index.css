@@ -11,3 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.title {
+  font-family: 'Permanent Marker', cursive;
+  text-align: center;
+  color: white;
+  background-color: black
+}

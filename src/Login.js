@@ -19,7 +19,6 @@ class Login extends React.Component {
 render(){
     return (
         <form onSubmit={() => this.props.handleSubmit(this.state)}>
-            <br/>
             <label>Email</label>
             <br/>
             <input value={this.state.email} onChange={this.handleChangeEmail} placeholder='Email' />
