@@ -12,7 +12,8 @@ class App extends React.Component {
 
   state = {
     user: null,
-    artworks: null
+    artworks: null,
+    tourInProgress: []
   }
   
   componentDidMount() {
@@ -46,13 +47,22 @@ class App extends React.Component {
     this.props.history.push("/")
   }
 
+  handleAddArtworkToTourInProgress = (artwork) => {
+    if (this.state.tourInProgress.includes(artwork)) return
+    this.setState({tourInProgress: [...this.state.tourInProgress, artwork]})
+  }
+
+  // handleRemoveArtworkToTourInProgress = (artwork) => {
+
+  // }
+
   render() {
     return (
       <div>
         <h1 className="title">Public Art Tours</h1>   
         {
           this.state.user && !this.state.user.error ? (
-            <Route exact path='/' component={() => <MapContainer user={this.state.user} artworks={this.state.artworks} logOut={this.logOut}/>} />
+            <Route exact path='/' component={() => <MapContainer user={this.state.user} artworks={this.state.artworks} handleAddArtworkToTourInProgress={this.handleAddArtworkToTourInProgress} logOut={this.logOut}/>} />
           ) : (
             
             < NavBar user={this.state.user} signUp={this.signUp} logIn={this.logIn} />
