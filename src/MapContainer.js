@@ -6,7 +6,7 @@ class MapContainer extends Component {
     render() {
         return (
             <div>
-                <Map artworks={this.props.artworks}/>
+                <Map artworks={this.props.artworks} handleNewTour={this.props.handleAddArtworkToTourInProgress}/>
 
                 <button onClick={this.props.logOut}>Log out</button>
             </div>
