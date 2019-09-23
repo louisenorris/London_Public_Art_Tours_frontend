@@ -4,16 +4,17 @@ import API from './adapters/API.js'
 import Signup from './Signup.js';
 import Login from './Login.js';
 import MapContainer from './MapContainer.js';
-import NavBar from './NavBar.js'
-
+import NavBar from './NavBar.js';
+import UserContainer from './UserContainer.js';
 
 class App extends React.Component {
-
 
   state = {
     user: null,
     artworks: null,
-    tourInProgress: []
+    searchTerm: "",
+    tourInProgress: [],
+    addToTourBtn: false
   }
   
   componentDidMount() {
@@ -26,7 +27,6 @@ class App extends React.Component {
     .then(artworks => {
       this.setState({artworks})
     })
-
   }
 
   signUp = user => {
@@ -47,14 +47,47 @@ class App extends React.Component {
     this.props.history.push("/")
   }
 
+  updateUser = (event, user) => {
+    event.preventDefault()
+    API.updateUser(user)
+    .then(user => this.setState({user}))
+    .then(this.props.history.push("/account"))
+  }
+
+  deleteUser = id => {
+    API.deleteUser(id)
+    .then(this.logOut())
+  }
+
+
+  showAddToTourBtnOnInfoWin = () => {
+    debugger
+    this.setState({addToTourBtn: true})
+  }
+
   handleAddArtworkToTourInProgress = (artwork) => {
     if (this.state.tourInProgress.includes(artwork)) return
     this.setState({tourInProgress: [...this.state.tourInProgress, artwork]})
   }
 
-  // handleRemoveArtworkToTourInProgress = (artwork) => {
 
-  // }
+
+  handleArtworkSearch = (event) => {
+    this.setState({searchTerm: event.target[0].value})
+  }
+
+  showAllArtworks = () => {
+    this.setState({searchTerm: ""})
+  } 
+
+  searchArtworks = () => {
+    if (this.state.searchTerm) {
+      return this.state.artworks.filter(artwork => artwork.title.toLocaleLowerCase().includes(this.state.searchTerm.toLocaleLowerCase()) || artwork.artist.toLocaleLowerCase().includes(this.state.searchTerm.toLocaleLowerCase()))
+    } else {
+      return this.state.artworks
+    }
+  }
+
 
   render() {
     return (
@@ -62,7 +95,19 @@ class App extends React.Component {
         <h1 className="title">Public Art Tours</h1>   
         {
           this.state.user && !this.state.user.error ? (
-            <Route exact path='/' component={() => <MapContainer user={this.state.user} artworks={this.state.artworks} handleAddArtworkToTourInProgress={this.handleAddArtworkToTourInProgress} logOut={this.logOut}/>} />
+            <Route exact path='/' component={() => <MapContainer 
+                                                      user={this.state.user} 
+                                                      artworks={this.searchArtworks()} 
+                                                      handleAddArtworkToTourInProgress={this.handleAddArtworkToTourInProgress} 
+                                                      handleArtworkSearch={this.handleArtworkSearch} 
+                                                      searchTerm={this.state.searchTerm} 
+                                                      logOut={this.logOut}
+                                                      showAddToTourBtnOnInfoWin={this.showAddToTourBtnOnInfoWin}
+                                                      addToTourBtn={this.state.addToTourBtn}
+                                                      showAllArtworks={this.showAllArtworks}
+                                                    />
+                                            } 
+            />
           ) : (
             
             < NavBar user={this.state.user} signUp={this.signUp} logIn={this.logIn} />
@@ -70,9 +115,10 @@ class App extends React.Component {
         }
         <Route exact path="/login" component={(props) => <Login {...props} handleSubmit={this.logIn} />}/>
         <Route exact path="/signup" component={(props) => <Signup {...props} handleSubmit={this.signUp} />}/> 
+        <Route exact path="/account" component={(props) => <UserContainer {...props} user={this.state.user} updateUser={this.updateUser} deleteUser={this.deleteUser} />} />
       </div>
 
-    );
+    )
   }
 }
 

@@ -47,6 +47,27 @@ const logIn = (user) => fetch(loginURL, {
 .then(saveToken)
 .catch(handleServerError)
 
+const updateUser = (user) => {
+   return fetch(signupURL + `/${user.id}`, {
+    method: 'PATCH',
+    headers: constructHeaders({
+        'Content-Type': 'application/json'
+    }),
+    body: JSON.stringify({user})
+}).then(jsonify)
+.catch(handleServerError)
+}
+
+const deleteUser = id => {
+// debugger
+  return fetch(signupURL + `/${id}`, {
+    method: "DELETE",
+    headers: constructHeaders({
+        'Content-Type': 'application/json'
+    }),
+  });
+}
+
 const validateUser = () => {
     if (!localStorage.getItem('token')) return Promise.resolve({error: 'no token'})
 
@@ -70,5 +91,7 @@ export default {
     logIn,
     validateUser,
     clearToken,
-    getArtworks
+    getArtworks,
+    updateUser,
+    deleteUser
 }
