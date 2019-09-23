@@ -59,7 +59,6 @@ const updateUser = (user) => {
 }
 
 const deleteUser = id => {
-// debugger
   return fetch(signupURL + `/${id}`, {
     method: "DELETE",
     headers: constructHeaders({

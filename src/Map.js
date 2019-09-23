@@ -3,6 +3,10 @@ import { withScriptjs, GoogleMap, withGoogleMap, Marker, InfoWindow } from 'reac
 
 function GoogleMapRender(props) {
     const [selectedArtwork, setSelectedArtwork] = useState(null);
+
+
+
+
     return (
     <GoogleMap 
         defaultCenter={{ lat: 51.523, lng: -0.191 }}
