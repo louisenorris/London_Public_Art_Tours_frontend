@@ -15,7 +15,7 @@ class SearchBar extends Component {
         return (
             <div>
              <label>
-                 <strong>Search by artworks or artist:</strong>
+                 <label className="menu">Search by artwork or artist:</label>
                   <form onSubmit={(e) => this.props.handleArtworkSearch(e)}>
                      <input type="text" value={this.state.value} onChange={this.handleChange}/>
                      <button type="submit">Search</button>

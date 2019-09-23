@@ -20,16 +20,21 @@ class MapContainer extends Component {
                     searchTerm={this.props.searchTerm}
                     showAllArtworks={this.props.showAllArtworks}
                 />
-                <button onClick={() => this.props.showAddToTourBtnOnInfoWin()}>Create a tour</button>
+                <button className="menu" onClick={() => this.props.showAddToTourBtnOnInfoWin()}>Create a tour</button>
                 
-                <button>
+                <button className="menu">
                     <NavLink to="/account" exact>
                         User Account
                     </NavLink>
                 </button>
 
-                {/* <button>User Account</button> */}
-                <button onClick={this.props.logOut}>Log out</button>
+                <button className="menu">
+                    <NavLink to="/tours" exact>
+                        Tours
+                    </NavLink>
+                </button>
+
+                <button className="menu" onClick={this.props.logOut}>Log out</button>
             </div>
         );
     }

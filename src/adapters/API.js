@@ -3,6 +3,7 @@ const signupURL = `${endpoint}/users`
 const loginURL = `${endpoint}/login`
 const validateURL = `${endpoint}/validate`
 const artworksURL = `${endpoint}/artworks`
+const toursURL = `${endpoint}/tours`
 
 const jsonify = res => {
     if (res.ok)
@@ -84,6 +85,11 @@ const getArtworks = () => {
     .then(jsonify)
 }
 
+const getTours = () => {
+    return fetch(toursURL)
+    .then(jsonify)
+}
+
 
 export default {
     signUp,
@@ -92,5 +98,6 @@ export default {
     clearToken,
     getArtworks,
     updateUser,
-    deleteUser
+    deleteUser,
+    getTours
 }

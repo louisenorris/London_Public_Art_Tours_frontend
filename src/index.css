@@ -18,3 +18,8 @@ code {
   color: white;
   background-color: black
 }
+
+.menu {
+  font-family: 'Permanent Marker', cursive;
+  /* font-weight: bold */
+}
