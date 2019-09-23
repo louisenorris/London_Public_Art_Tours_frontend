@@ -1,13 +1,34 @@
 import React, { Component } from 'react';
 import Map from './Map.js'
+import SearchBar from './SearchBar.js';
+import { NavLink } from "react-router-dom";
+
 
 
 class MapContainer extends Component {
     render() {
         return (
             <div>
-                <Map artworks={this.props.artworks} handleNewTour={this.props.handleAddArtworkToTourInProgress}/>
+                <Map 
+                    artworks={this.props.artworks} 
+                    handleNewTour={this.props.handleAddArtworkToTourInProgress}
+                    addToTourBtn={this.props.addToTourBtn}
+                />
 
+                <SearchBar 
+                    handleArtworkSearch={this.props.handleArtworkSearch} 
+                    searchTerm={this.props.searchTerm}
+                    showAllArtworks={this.props.showAllArtworks}
+                />
+                <button onClick={() => this.props.showAddToTourBtnOnInfoWin()}>Create a tour</button>
+                
+                <button>
+                    <NavLink to="/account" exact>
+                        User Account
+                    </NavLink>
+                </button>
+
+                {/* <button>User Account</button> */}
                 <button onClick={this.props.logOut}>Log out</button>
             </div>
         );

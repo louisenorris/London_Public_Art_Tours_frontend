@@ -30,8 +30,13 @@ function GoogleMapRender(props) {
             }}
             >
                 <>
-                <h2>{selectedArtwork.title}</h2>
+                <h3>{selectedArtwork.title}</h3>
                 <p>{selectedArtwork.artist}</p>
+                {
+                    props.addToTourBtn ? 
+                    <button>Add to tour</button>
+                    : null
+                }
                 </>
             </InfoWindow>
         )}
