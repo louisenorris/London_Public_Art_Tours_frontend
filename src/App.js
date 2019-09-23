@@ -37,6 +37,8 @@ class App extends React.Component {
     })
   }
 
+  // /USER METHODS ///
+
   signUp = user => {
     API.signUp(user)
     .then(user => this.setState({user}))
@@ -68,16 +70,26 @@ class App extends React.Component {
   }
 
 
+// /TOUR METHODS ///
+
+
   showAddToTourBtnOnInfoWin = () => {
-    debugger
     this.setState({addToTourBtn: true})
   }
 
-  handleAddArtworkToTourInProgress = (artwork) => {
+  handleNewTour = (artwork) => {
     if (this.state.tourInProgress.includes(artwork)) return
     this.setState({tourInProgress: [...this.state.tourInProgress, artwork]})
   }
 
+  cancelTour = () => {
+    this.setState({
+      addToTourBtn: false,
+      tourInProgress: []
+    })
+  }
+
+  // /ARTWORKS ON MAP METHODS ///
 
   handleShowTourOnMap = (tourId) => {
     const findArtworks = this.state.artworks.filter(artwork => artwork.tour_artworks.find(tour_artwork => tour_artwork.tour_id === tourId))
@@ -115,7 +127,6 @@ class App extends React.Component {
             <Route exact path='/' component={() => <MapContainer 
                                                       user={this.state.user} 
                                                       artworks={this.searchAndFilterArtworks()} 
-                                                      handleAddArtworkToTourInProgress={this.handleAddArtworkToTourInProgress} 
                                                       handleArtworkSearch={this.handleArtworkSearch} 
                                                       searchTerm={this.state.searchTerm} 
                                                       logOut={this.logOut}
@@ -123,6 +134,9 @@ class App extends React.Component {
                                                       addToTourBtn={this.state.addToTourBtn}
                                                       showAllArtworks={this.showAllArtworks}
                                                       tours={this.state.tours}
+                                                      handleNewTour={this.handleNewTour}
+                                                      tourInProgress={this.state.tourInProgress}
+                                                      cancelTour={this.cancelTour}
                                                     />
                                             } 
             />
