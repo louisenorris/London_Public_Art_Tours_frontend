@@ -167,7 +167,7 @@ class App extends React.Component {
         }
         <Route exact path="/login" component={(props) => <Login {...props} handleSubmit={this.logIn} />}/>
         <Route exact path="/signup" component={(props) => <Signup {...props} handleSubmit={this.signUp} />}/> 
-        <Route exact path="/account" component={(props) => <UserContainer {...props} user={this.state.user} updateUser={this.updateUser} deleteUser={this.deleteUser} />} />
+        <Route exact path="/account" component={(props) => <UserContainer {...props} user={this.state.user} updateUser={this.updateUser} deleteUser={this.deleteUser} handleShowTourOnMap={this.handleShowTourOnMap} />} />
         <Route exact path="/tours" component={(props) => <TourContainer {...props} tours={this.state.tours} artworks={this.state.artworks} handleShowTourOnMap={this.handleShowTourOnMap} />} />
       </div>
 
