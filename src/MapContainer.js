@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Map from './Map.js'
 import SearchBar from './SearchBar.js';
 import { NavLink } from "react-router-dom";
-import Artwork from './Artwork.js';
 
 class MapContainer extends Component {
 
@@ -39,10 +38,16 @@ class MapContainer extends Component {
                         {
                             this.props.tourInProgress ? 
 
-                            this.props.tourInProgress.map(tourstop => <li>{tourstop.title}</li>) :
+                            this.props.tourInProgress.map(tourstop => 
+                                <>
+                                <li>{tourstop.title} <button onClick={() => this.props.handleCancelArtwork(tourstop)}>x</button></li>
+                                </>
+                                ) 
+                            //add x button to remove artwork from current tour selection!!!!
+                            :
 
                             <p>Start adding artworks to your tour - select a marker and click Add to tour.</p>
-
+                            
                         }
 
                         <button className="menu">

@@ -82,6 +82,11 @@ class App extends React.Component {
     this.setState({tourInProgress: [...this.state.tourInProgress, artwork]})
   }
 
+  handleCancelArtwork = (artwork) => {
+    const withoutCancelledArtwork = this.state.tourInProgress.filter(tourArtwork => tourArtwork !== artwork)
+    this.setState({tourInProgress: withoutCancelledArtwork})
+  }
+
   cancelTour = () => {
     this.setState({
       addToTourBtn: false,
@@ -137,6 +142,7 @@ class App extends React.Component {
                                                       handleNewTour={this.handleNewTour}
                                                       tourInProgress={this.state.tourInProgress}
                                                       cancelTour={this.cancelTour}
+                                                      handleCancelArtwork={this.handleCancelArtwork}
                                                     />
                                             } 
             />
