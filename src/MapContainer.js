@@ -28,53 +28,54 @@ class MapContainer extends Component {
                     searchTerm={this.props.searchTerm}
                     showAllArtworks={this.props.showAllArtworks}
                 />
-                <button className="menu" onClick={() => this.props.showAddToTourBtnOnInfoWin()}>Create a tour</button>
 
                 {
                     this.props.addToTourBtn ? (
                         <>
+                        <p>Start adding artworks to your tour - select a marker and click Add to tour.</p>
                         <input type="text" value={this.state.tour_name} placeholder="Add tour name" onChange={this.handleChange}/>
 
                         {
-                            this.props.tourInProgress ? 
+                            this.props.tourInProgress ? (
 
                             this.props.tourInProgress.map(tourstop => 
                                 <>
                                 <li>{tourstop.title} <button onClick={() => this.props.handleCancelArtwork(tourstop)}>x</button></li>
                                 </>
                                 ) 
-                            //add x button to remove artwork from current tour selection!!!!
-                            :
-
-                            <p>Start adding artworks to your tour - select a marker and click Add to tour.</p>
+                           ) : (
+                            null
+                            )
                             
                         }
 
-                        <button className="menu">
+                        <button onClick={() => this.props.createTour(this.props.tourInProgress, this.state.tour_name, this.props.user)} className="menu">
                             <NavLink to="/tours" exact>
                                 Confirm Tour
                             </NavLink>
                         </button>
 
-                        <button className="menu" onClick={this.props.cancelTour}>Cancel tour</button>
+                        <button onClick={this.props.cancelTour}>Cancel tour</button>
 
-                        <button className="menu" onClick={this.props.logOut}>Log out</button>
+                        <button onClick={this.props.logOut}>Log out</button>
                         </>
                     ) : (
                         <>
-                        <button className="menu">
+                        <button onClick={() => this.props.showAddToTourBtnOnInfoWin()}>Create a tour</button>
+                        
+                        <button>
                             <NavLink to="/account" exact>
                                 User Account
                             </NavLink>
                         </button>
 
-                        <button className="menu">
+                        <button>
                             <NavLink to="/tours" exact>
                                 Tours
                             </NavLink>
                         </button>
 
-                        <button className="menu" onClick={this.props.logOut}>Log out</button>
+                        <button onClick={this.props.logOut}>Log out</button>
                         </>
                     )
 

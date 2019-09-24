@@ -94,6 +94,19 @@ class App extends React.Component {
     })
   }
 
+  createTour = (artworks, tourName) => {
+    debugger
+    API.createTour(artworks, tourName) 
+    .then(data => this.setState({ 
+      addToTourBtn: false,
+      tourInProgress: [],
+      // user: {
+      //   ...this.state.user, tours: [...this.state.user.tours, data.tour]
+      // }
+    }))
+    .then(this.props.history.push("/account"))
+  }
+
   // /ARTWORKS ON MAP METHODS ///
 
   handleShowTourOnMap = (tourId) => {
@@ -143,6 +156,7 @@ class App extends React.Component {
                                                       tourInProgress={this.state.tourInProgress}
                                                       cancelTour={this.cancelTour}
                                                       handleCancelArtwork={this.handleCancelArtwork}
+                                                      createTour={this.createTour}
                                                     />
                                             } 
             />
