@@ -6,6 +6,7 @@ import Login from './Login.js';
 import MapContainer from './MapContainer.js';
 import NavBar from './NavBar.js';
 import UserContainer from './UserContainer.js';
+import TourContainer from './TourContainer.js';
 
 class App extends React.Component {
 
@@ -14,7 +15,9 @@ class App extends React.Component {
     artworks: null,
     searchTerm: "",
     tourInProgress: [],
-    addToTourBtn: false
+    addToTourBtn: false,
+    tours: null,
+    selectedTour: null
   }
   
   componentDidMount() {
@@ -27,7 +30,14 @@ class App extends React.Component {
     .then(artworks => {
       this.setState({artworks})
     })
+
+    API.getTours()
+    .then(tours => {
+      this.setState({tours})
+    })
   }
+
+  // /USER METHODS ///
 
   signUp = user => {
     API.signUp(user)
@@ -60,29 +70,66 @@ class App extends React.Component {
   }
 
 
+// /TOUR METHODS ///
+
+
   showAddToTourBtnOnInfoWin = () => {
-    debugger
     this.setState({addToTourBtn: true})
   }
 
-  handleAddArtworkToTourInProgress = (artwork) => {
+  handleNewTour = (artwork) => {
     if (this.state.tourInProgress.includes(artwork)) return
     this.setState({tourInProgress: [...this.state.tourInProgress, artwork]})
   }
 
+  handleCancelArtwork = (artwork) => {
+    const withoutCancelledArtwork = this.state.tourInProgress.filter(tourArtwork => tourArtwork !== artwork)
+    this.setState({tourInProgress: withoutCancelledArtwork})
+  }
 
+  cancelTour = () => {
+    this.setState({
+      addToTourBtn: false,
+      tourInProgress: []
+    })
+  }
+
+  createTour = (artworks, tourName) => {
+    debugger
+    API.createTour(artworks, tourName) 
+    .then(data => this.setState({ 
+      addToTourBtn: false,
+      tourInProgress: [],
+      // user: {
+      //   ...this.state.user, tours: [...this.state.user.tours, data.tour]
+      // }
+    }))
+    .then(this.props.history.push("/account"))
+  }
+
+  // /ARTWORKS ON MAP METHODS ///
+
+  handleShowTourOnMap = (tourId) => {
+    const findArtworks = this.state.artworks.filter(artwork => artwork.tour_artworks.find(tour_artwork => tour_artwork.tour_id === tourId))
+    this.setState({selectedTour: findArtworks})
+  }
 
   handleArtworkSearch = (event) => {
     this.setState({searchTerm: event.target[0].value})
   }
 
   showAllArtworks = () => {
-    this.setState({searchTerm: ""})
+    this.setState({
+      searchTerm: "",
+      selectedTour: null
+    })
   } 
 
-  searchArtworks = () => {
+  searchAndFilterArtworks = () => {
     if (this.state.searchTerm) {
       return this.state.artworks.filter(artwork => artwork.title.toLocaleLowerCase().includes(this.state.searchTerm.toLocaleLowerCase()) || artwork.artist.toLocaleLowerCase().includes(this.state.searchTerm.toLocaleLowerCase()))
+    } else if (this.state.selectedTour) {
+      return this.state.selectedTour 
     } else {
       return this.state.artworks
     }
@@ -97,14 +144,19 @@ class App extends React.Component {
           this.state.user && !this.state.user.error ? (
             <Route exact path='/' component={() => <MapContainer 
                                                       user={this.state.user} 
-                                                      artworks={this.searchArtworks()} 
-                                                      handleAddArtworkToTourInProgress={this.handleAddArtworkToTourInProgress} 
+                                                      artworks={this.searchAndFilterArtworks()} 
                                                       handleArtworkSearch={this.handleArtworkSearch} 
                                                       searchTerm={this.state.searchTerm} 
                                                       logOut={this.logOut}
                                                       showAddToTourBtnOnInfoWin={this.showAddToTourBtnOnInfoWin}
                                                       addToTourBtn={this.state.addToTourBtn}
                                                       showAllArtworks={this.showAllArtworks}
+                                                      tours={this.state.tours}
+                                                      handleNewTour={this.handleNewTour}
+                                                      tourInProgress={this.state.tourInProgress}
+                                                      cancelTour={this.cancelTour}
+                                                      handleCancelArtwork={this.handleCancelArtwork}
+                                                      createTour={this.createTour}
                                                     />
                                             } 
             />
@@ -115,7 +167,8 @@ class App extends React.Component {
         }
         <Route exact path="/login" component={(props) => <Login {...props} handleSubmit={this.logIn} />}/>
         <Route exact path="/signup" component={(props) => <Signup {...props} handleSubmit={this.signUp} />}/> 
-        <Route exact path="/account" component={(props) => <UserContainer {...props} user={this.state.user} updateUser={this.updateUser} deleteUser={this.deleteUser} />} />
+        <Route exact path="/account" component={(props) => <UserContainer {...props} user={this.state.user} updateUser={this.updateUser} deleteUser={this.deleteUser} handleShowTourOnMap={this.handleShowTourOnMap} />} />
+        <Route exact path="/tours" component={(props) => <TourContainer {...props} tours={this.state.tours} artworks={this.state.artworks} handleShowTourOnMap={this.handleShowTourOnMap} />} />
       </div>
 
     )

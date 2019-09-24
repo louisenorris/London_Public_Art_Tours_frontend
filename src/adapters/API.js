@@ -3,6 +3,7 @@ const signupURL = `${endpoint}/users`
 const loginURL = `${endpoint}/login`
 const validateURL = `${endpoint}/validate`
 const artworksURL = `${endpoint}/artworks`
+const toursURL = `${endpoint}/tours`
 
 const jsonify = res => {
     if (res.ok)
@@ -59,7 +60,6 @@ const updateUser = (user) => {
 }
 
 const deleteUser = id => {
-// debugger
   return fetch(signupURL + `/${id}`, {
     method: "DELETE",
     headers: constructHeaders({
@@ -85,6 +85,33 @@ const getArtworks = () => {
     .then(jsonify)
 }
 
+const getTours = () => {
+    return fetch(toursURL)
+    .then(jsonify)
+}
+
+const createTour = (artworks, tourName) => {
+
+    debugger
+
+    const artworkIds = artworks.map(artwork => {return {artwork_id: artwork.id}})
+    debugger
+    return fetch(toursURL, {
+     method: 'POST',
+     headers: constructHeaders({
+         'Content-Type': 'application/json'
+     }),
+     body: JSON.stringify({
+         tour: {
+            name: tourName,
+            tour_artworks: artworkIds
+         }
+        })
+ }).then(jsonify)
+ .catch(handleServerError)
+ debugger
+ }
+
 
 export default {
     signUp,
@@ -93,5 +120,7 @@ export default {
     clearToken,
     getArtworks,
     updateUser,
-    deleteUser
+    deleteUser,
+    getTours,
+    createTour
 }

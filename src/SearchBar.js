@@ -14,14 +14,11 @@ class SearchBar extends Component {
     render() {
         return (
             <div>
-             <label>
-                 <strong>Search by artworks or artist:</strong>
                   <form onSubmit={(e) => this.props.handleArtworkSearch(e)}>
                      <input type="text" value={this.state.value} onChange={this.handleChange}/>
                      <button type="submit">Search</button>
                  </form>
                  <button onClick={this.props.showAllArtworks}>Show all artworks</button>
-             </label>
          </div>
         );
     }
