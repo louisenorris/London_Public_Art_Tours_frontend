@@ -7,7 +7,6 @@ import MapContainer from './MapContainer.js';
 import NavBar from './NavBar.js';
 import UserContainer from './UserContainer.js';
 import TourContainer from './TourContainer.js';
-import { debounce } from "debounce";
 
 class App extends React.Component {
 
@@ -80,6 +79,7 @@ class App extends React.Component {
 
   handleNewTour = (artwork) => {
     if (this.state.tourInProgress.includes(artwork)) return
+    if (this.state.tourInProgress.length > 8) return
     this.setState({tourInProgress: [...this.state.tourInProgress, artwork]})
   }
 
@@ -112,13 +112,7 @@ class App extends React.Component {
     this.setState({selectedTour: findArtworks})
   }
 
-  // setSearchTermState = (event) => {
-  //   debugger
-  //   this.setState({searchTerm: event.target.value})
-  // }
-
   handleArtworkSearch = (event) => {
-    debugger
     this.setState({searchTerm: event.target.value})
   }
 
@@ -161,6 +155,7 @@ class App extends React.Component {
                                                       cancelTour={this.cancelTour}
                                                       handleCancelArtwork={this.handleCancelArtwork}
                                                       createTour={this.createTour}
+                                                      selectedTour={this.state.selectedTour}
                                                     />
                                             } 
             />

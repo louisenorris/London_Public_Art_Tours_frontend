@@ -14,10 +14,9 @@ class TourCard extends Component {
                                                                         artworks={this.props.artworks} 
                                                                     />)
                 }
-                {/* <button onClick={() => this.props.handleShowTourOnMap(this.props.tour.id)}>Show on map</button> */}
                 <button onClick={() => this.props.handleShowTourOnMap(this.props.tour.id)} >
                     <NavLink to="/" exact>
-                        Show on map
+                        Get directions
                     </NavLink>
                 </button>
             </div>

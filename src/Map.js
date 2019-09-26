@@ -1,13 +1,13 @@
 import React, { Component, useState } from 'react';
-import { withScriptjs, GoogleMap, withGoogleMap, Marker, InfoWindow } from 'react-google-maps';
+import { withScriptjs, GoogleMap, withGoogleMap, Marker, InfoWindow, DirectionsRenderer } from 'react-google-maps';
 
 function GoogleMapRender(props) {
     const [selectedArtwork, setSelectedArtwork] = useState(null);
 
     return (
     <GoogleMap 
-        defaultCenter={{ lat: 51.523, lng: -0.191 }}
-        defaultZoom={10}
+        defaultCenter={{ lat: 51.4993233, lng: -0.1144514 }}
+        defaultZoom={13}
     >
         {props.artworks ? 
             (props.artworks.map(artwork =>
@@ -42,6 +42,18 @@ function GoogleMapRender(props) {
                 </>
             </InfoWindow>
         )}
+        {props.directions && <DirectionsRenderer 
+                                directions={props.directions} 
+                                options={{
+                                    polylineOptions: {
+                                        storkeColor: props.storkeColor,
+                                        strokeOpacity: 0.4,
+                                        strokeWeight: 4
+                                      },
+                                      preserveViewport: true,
+                                      suppressMarkers: true,
+                                      icon: { scale: 3 }
+                                }}/>}
     </GoogleMap>
     )
 };
@@ -49,6 +61,48 @@ function GoogleMapRender(props) {
 const MapWrapped = withScriptjs(withGoogleMap(GoogleMapRender))
 
 class Map extends Component {
+
+    state = {
+        directions: null
+    }
+
+    componentDidMount(){
+        debugger
+        if (this.props.selectedTour) {
+            const directionsService = new window.google.maps.DirectionsService();
+            const directionsRenderer = new window.google.maps.DirectionsRenderer();
+            const wholeTour = this.props.selectedTour
+            const lastInTour = wholeTour[wholeTour.length-1]
+    
+            const origin = { lat: wholeTour[0].lat, lng: wholeTour[0].lng };
+            const destination = { lat: lastInTour.lat, lng: lastInTour.lng };
+            const middleArtworks = wholeTour.slice(1, -1)
+            const waypointArtworks = middleArtworks.map(wp => { return { 
+                location: new window.google.maps.LatLng(wp.lat, wp.lng),
+                stopover: true }  
+            })
+    debugger
+        directionsService.route(
+          {
+            origin: origin,
+            destination: destination,
+            travelMode: window.google.maps.TravelMode.WALKING,
+            waypoints: waypointArtworks
+          },
+          (result, status) => {
+            if (status === window.google.maps.DirectionsStatus.OK) {
+              this.setState({
+                directions: result
+              });
+              directionsRenderer.setPanel(document.getElementById('directionsPanel'))
+              directionsRenderer.setDirections(result);
+            } else {
+              console.error(`error fetching directions ${result}`);
+            }
+          }
+        );
+        }
+    }
 
 
     render() {
@@ -62,7 +116,10 @@ class Map extends Component {
                 mapElement={<div style={{ height: '100%'}} />}
                 addToTourBtn={this.props.addToTourBtn}
                 handleNewTour={this.props.handleNewTour}
+                selectedTour={this.props.selectedTour}
+                directions={this.state.directions}
                 />
+                <div id='directionsPanel'></div> 
             </div>
         );
     }
