@@ -91,11 +91,7 @@ const getTours = () => {
 }
 
 const createTour = (artworks, tourName) => {
-
-    debugger
-
     const artworkIds = artworks.map(artwork => {return {artwork_id: artwork.id}})
-    debugger
     return fetch(toursURL, {
      method: 'POST',
      headers: constructHeaders({
@@ -107,9 +103,8 @@ const createTour = (artworks, tourName) => {
             tour_artworks: artworkIds
          }
         })
- }).then(jsonify)
+ }).then(jsonify) 
  .catch(handleServerError)
- debugger
  }
 
 

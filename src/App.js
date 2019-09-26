@@ -7,6 +7,7 @@ import MapContainer from './MapContainer.js';
 import NavBar from './NavBar.js';
 import UserContainer from './UserContainer.js';
 import TourContainer from './TourContainer.js';
+import { debounce } from "debounce";
 
 class App extends React.Component {
 
@@ -95,14 +96,11 @@ class App extends React.Component {
   }
 
   createTour = (artworks, tourName) => {
-    debugger
     API.createTour(artworks, tourName) 
     .then(data => this.setState({ 
       addToTourBtn: false,
       tourInProgress: [],
-      // user: {
-      //   ...this.state.user, tours: [...this.state.user.tours, data.tour]
-      // }
+      user: {...this.state.user, tours: [...this.state.user.tours, data.tour]}
     }))
     .then(this.props.history.push("/account"))
   }
@@ -114,8 +112,14 @@ class App extends React.Component {
     this.setState({selectedTour: findArtworks})
   }
 
+  // setSearchTermState = (event) => {
+  //   debugger
+  //   this.setState({searchTerm: event.target.value})
+  // }
+
   handleArtworkSearch = (event) => {
-    this.setState({searchTerm: event.target[0].value})
+    debugger
+    this.setState({searchTerm: event.target.value})
   }
 
   showAllArtworks = () => {
@@ -139,7 +143,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <h1 className="title">Public Art Tours</h1>   
+        <h1 className="title">Public Art London</h1>   
         {
           this.state.user && !this.state.user.error ? (
             <Route exact path='/' component={() => <MapContainer 
@@ -161,8 +165,17 @@ class App extends React.Component {
                                             } 
             />
           ) : (
-            
+            <>
             < NavBar user={this.state.user} signUp={this.signUp} logIn={this.logIn} />
+            <br/>  
+            <p className="nav">Mapping app to aid navigation around London's public art. Discover ready-made tours or create your own experience.</p>
+            <br/> 
+            <br/> 
+            <br/> 
+            <br/> 
+            <br/> 
+            <img className="center" src={require("./london-skyline-isolated-big-hi.png")} alt="london"/>
+            </>
           )
         }
         <Route exact path="/login" component={(props) => <Login {...props} handleSubmit={this.logIn} />}/>

@@ -6,13 +6,13 @@ class NavBar extends Component {
         return (
             <div>
                  <>
-                <button>
+                <button className="nav">
                     <NavLink to="/signup" exact>
                       Sign up
                     </NavLink>
                 </button>
 
-                <button>
+                <button className="nav">
                     <NavLink to="/login" exact>
                       Login
                     </NavLink>

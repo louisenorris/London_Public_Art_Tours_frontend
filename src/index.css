@@ -23,3 +23,25 @@ code {
   font-family: 'Permanent Marker', cursive;
   /* font-weight: bold */
 }
+
+.search {
+  float: right;
+  margin: 20px;
+  background-color: black;
+  color: white
+}
+
+.searchbar {
+  background-color: grey;
+  margin: 20px;
+}
+
+.nav {
+  text-align: center; 
+  margin: 5px
+}
+
+.center {
+  max-width: 100%;
+  height: auto;
+}
