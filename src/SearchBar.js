@@ -6,16 +6,17 @@ class SearchBar extends Component {
 
     render() {
         return (
-            <div className="searchbar">
+            <div>
 
                 <br/>
                     <DebounceInput
                     value={this.props.searchTerm}
-                    placeholder="Search artworks here"
+                    placeholder="Search by artwork or artist..."
                     minLength={2}
                     debounceTimeout={1000}
-                    onChange={event => this.props.handleArtworkSearch(event)} />
-
+                    onChange={event => this.props.handleArtworkSearch(event)} 
+                    className="searchbar"
+                    />
                 <br/>
             </div>
         );

@@ -32,16 +32,50 @@ code {
 }
 
 .searchbar {
-  background-color: grey;
-  margin: 20px;
+  border: 1px solid;
+  border-radius: 4px;
+  width: 100%;
+  height: 30px;
+  margin: 10px 0;
+  padding-left: 7px;
+
+}
+
+.loginSignup {
+  border: 1px solid;
+  border-radius: 4px;
+  width: 100%;
+  height: 30px;
+  margin: 7px 0;
+  padding-left: 7px;
 }
 
 .nav {
   text-align: center; 
-  margin: 5px
+  margin: 10px;
 }
 
 .center {
   max-width: 100%;
   height: auto;
+}
+
+.intro {
+  font-family: 'Permanent Marker', cursive;
+  text-align: center;
+  color: black
+}
+
+.Background {
+  background-image: url(./London_Map.png);
+}
+
+.Button {
+  background-color: #212121;
+  color: white;
+  min-width: 400;
+  height: 30px;
+  border-radius: 4px;
+  vertical-align: center;
+  text-align: center;
 }

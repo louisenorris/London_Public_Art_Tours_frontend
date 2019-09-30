@@ -7,6 +7,10 @@ import MapContainer from './MapContainer.js';
 import NavBar from './NavBar.js';
 import UserContainer from './UserContainer.js';
 import TourContainer from './TourContainer.js';
+import Container from '@material-ui/core/Container';
+import CssBaseline from '@material-ui/core/CssBaseline'; 
+import backgroundImg from './London_Map4.png'
+
 
 class App extends React.Component {
 
@@ -17,7 +21,8 @@ class App extends React.Component {
     tourInProgress: [],
     addToTourBtn: false,
     tours: null,
-    selectedTour: null
+    selectedTour: null,
+    loginSignupClicked: false
   }
   
   componentDidMount() {
@@ -35,6 +40,7 @@ class App extends React.Component {
     .then(tours => {
       this.setState({tours})
     })
+    
   }
 
   // /USER METHODS ///
@@ -67,6 +73,10 @@ class App extends React.Component {
   deleteUser = id => {
     API.deleteUser(id)
     .then(this.logOut())
+  }
+
+  handleLoginSignupClicked = () => {
+    this.setState({loginSignupClicked: true})
   }
 
 
@@ -133,12 +143,89 @@ class App extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.setState({ loginSignupClicked: false})
+  }
+
+  renderContent = () => {
+    if (this.state.user && !this.state.user.error) {
+      return  <Route exact path='/' component={() => <MapContainer 
+                                                  user={this.state.user} 
+                                                  artworks={this.searchAndFilterArtworks()} 
+                                                  handleArtworkSearch={this.handleArtworkSearch} 
+                                                  searchTerm={this.state.searchTerm} 
+                                                  logOut={this.logOut}
+                                                  showAddToTourBtnOnInfoWin={this.showAddToTourBtnOnInfoWin}
+                                                  addToTourBtn={this.state.addToTourBtn}
+                                                  showAllArtworks={this.showAllArtworks}
+                                                  tours={this.state.tours}
+                                                  handleNewTour={this.handleNewTour}
+                                                  tourInProgress={this.state.tourInProgress}
+                                                  cancelTour={this.cancelTour}
+                                                  handleCancelArtwork={this.handleCancelArtwork}
+                                                  createTour={this.createTour}
+                                                  selectedTour={this.state.selectedTour}
+                                                />
+                                              } 
+              />
+    } else if (this.state.loginSignupClicked) {
+      return (
+        <div style={{
+          backgroundImage: "url(" + backgroundImg + ")",
+          backgroundSize: "cover",
+          backgroundPosition: "center center",
+          backgroundRepeat: "no-repeat",
+          backgroundOpacity: 0.5
+        }}>
+      < NavBar user={this.state.user} signUp={this.signUp} logIn={this.logIn} handleLoginSignupClicked={this.handleLoginSignupClicked}/>
+      </div>
+      )
+    } else {
+      return (
+        <>
+          <div style={{
+          backgroundImage: "url(" + backgroundImg + ")",
+          backgroundSize: "cover",
+          backgroundPosition: "center center",
+          backgroundRepeat: "no-repeat",
+          backgroundOpacity: 0.5
+          }}>
+          < NavBar user={this.state.user} signUp={this.signUp} logIn={this.logIn} handleLoginSignupClicked={this.handleLoginSignupClicked}/>
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <h1 className="intro">Mapping app to aid navigation around London's public art. Discover ready-made tours or create your own experience.</h1>
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          </div>
+          {/* <img style={{position: 'relative', width: '100%', bottom: "2.5%"}} className="center" src={require("./london-skyline-isolated-big-hi.png")} alt="london"/> */}
+        </>
+      )
+    }
+  }
 
   render() {
     return (
-      <div>
+      <>
+      <CssBaseline />
+      <Container maxWidth="sm" style={{height: '95vh'}}>
         <h1 className="title">Public Art London</h1>   
-        {
+
+        {this.renderContent()}
+        {/* {
           this.state.user && !this.state.user.error ? (
             <Route exact path='/' component={() => <MapContainer 
                                                       user={this.state.user} 
@@ -161,24 +248,41 @@ class App extends React.Component {
             />
           ) : (
             <>
-            < NavBar user={this.state.user} signUp={this.signUp} logIn={this.logIn} />
-            <br/>  
+            <br/> 
+            <br/> 
+            <br/> 
+            <br/> 
+            <br/> 
+            <br/> 
+            < NavBar user={this.state.user} signUp={this.signUp} logIn={this.logIn} handleLoginSignupClicked={this.handleLoginSignupClicked}/>
+            <br/> 
+            <br/> 
+            <br/> 
+            <br/> 
+            <br/> 
+            <br/> 
+            <br/> 
+            <br/> 
             <p className="nav">Mapping app to aid navigation around London's public art. Discover ready-made tours or create your own experience.</p>
             <br/> 
             <br/> 
+          
             <br/> 
             <br/> 
             <br/> 
-            <img className="center" src={require("./london-skyline-isolated-big-hi.png")} alt="london"/>
-            </>
+            <br/> 
+            <br/> 
+            <br/> 
+            <img style={{position: 'relative', width: '100%', bottom: "2.5%"}} className="center" src={require("./london-skyline-isolated-big-hi.png")} alt="london"/>
+            </> 
           )
-        }
+        } */}
         <Route exact path="/login" component={(props) => <Login {...props} handleSubmit={this.logIn} />}/>
         <Route exact path="/signup" component={(props) => <Signup {...props} handleSubmit={this.signUp} />}/> 
         <Route exact path="/account" component={(props) => <UserContainer {...props} user={this.state.user} updateUser={this.updateUser} deleteUser={this.deleteUser} handleShowTourOnMap={this.handleShowTourOnMap} />} />
         <Route exact path="/tours" component={(props) => <TourContainer {...props} tours={this.state.tours} artworks={this.state.artworks} handleShowTourOnMap={this.handleShowTourOnMap} />} />
-      </div>
-
+      </Container>
+    </>
     )
   }
 }

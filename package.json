@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.4.2",
+    "@material-ui/core": "^4.4.3",
+    "@material-ui/styles": "^4.4.3",
     "awesome-debounce-promise": "^2.1.0",
     "debounce": "^1.2.0",
     "react": "^16.9.0",
@@ -11,9 +12,12 @@
     "react-debounce-input": "^3.2.0",
     "react-dom": "^16.9.0",
     "react-google-maps": "^9.4.5",
+    "react-image-and-background-image-fade": "^1.0.4",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
-    "react-timeout": "^1.2.0"
+    "react-timeout": "^1.2.0",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.1"
   },
   "scripts": {
     "start": "react-scripts start",

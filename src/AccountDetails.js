@@ -18,7 +18,7 @@ class AccountDetails extends Component {
                         <li>{tour.name}</li>
                         <button onClick={() => this.props.handleShowTourOnMap(tour.id)} >
                         <NavLink to="/" exact>
-                            Show on map
+                            Get directions
                         </NavLink>
                         </button>
                         </>)

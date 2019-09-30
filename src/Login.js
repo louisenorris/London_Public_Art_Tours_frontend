@@ -1,5 +1,4 @@
 import React from 'react';
-// import Button from '@material-ui/core/Button';
 
 
 class Login extends React.Component {
@@ -18,17 +17,18 @@ class Login extends React.Component {
 
 render(){
     return (
+        <>
+        <h2 className="intro">Welcome back!</h2>
+        <h2 className="intro">Log in to continue the adventure</h2>
         <form onSubmit={() => this.props.handleSubmit(this.state)}>
-            <label>Email</label>
+        
+            <input className="loginSignup" value={this.state.email} onChange={this.handleChangeEmail} placeholder='Email' />
             <br/>
-            <input value={this.state.email} onChange={this.handleChangeEmail} placeholder='Email' />
+            <input className="loginSignup" type='password' value={this.state.password} onChange={this.handleChangePassword} placeholder='Password' />
             <br/>
-            <label>Password</label>
-            <br/>
-            <input type='password' value={this.state.password} onChange={this.handleChangePassword} placeholder='Password' />
-            <br/>
-            <button type='submit'>Login</button>
+            <button className="Button" type='submit'>LOGIN</button>
         </form>
+        </>
     );
 };
 }

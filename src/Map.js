@@ -1,5 +1,6 @@
 import React, { Component, useState } from 'react';
 import { withScriptjs, GoogleMap, withGoogleMap, Marker, InfoWindow, DirectionsRenderer } from 'react-google-maps';
+import { Button, Icon } from 'semantic-ui-react'
 
 function GoogleMapRender(props) {
     const [selectedArtwork, setSelectedArtwork] = useState(null);
@@ -34,6 +35,7 @@ function GoogleMapRender(props) {
                 <>
                 <h3>{selectedArtwork.title}</h3>
                 <p>{selectedArtwork.artist}</p>
+                <img class="ui bottom aligned tiny image" src={require(`../public/imgs/${selectedArtwork.title.toLowerCase().split(' ').join('_')}.jpg`)} alt="artwork"/>
                 {
                     props.addToTourBtn ? 
                     <button onClick={() => props.handleNewTour(selectedArtwork)} >Add to tour</button>
@@ -43,6 +45,7 @@ function GoogleMapRender(props) {
             </InfoWindow>
         )}
         {props.directions && <DirectionsRenderer 
+                                artworks={props.artworks}
                                 directions={props.directions} 
                                 options={{
                                     polylineOptions: {
@@ -67,7 +70,7 @@ class Map extends Component {
     }
 
     componentDidMount(){
-        debugger
+        // debugger
         if (this.props.selectedTour) {
             const directionsService = new window.google.maps.DirectionsService();
             const directionsRenderer = new window.google.maps.DirectionsRenderer();
@@ -81,13 +84,14 @@ class Map extends Component {
                 location: new window.google.maps.LatLng(wp.lat, wp.lng),
                 stopover: true }  
             })
-    debugger
+    // debugger
         directionsService.route(
           {
             origin: origin,
             destination: destination,
             travelMode: window.google.maps.TravelMode.WALKING,
-            waypoints: waypointArtworks
+            waypoints: waypointArtworks,
+            optimizeWaypoints: true
           },
           (result, status) => {
             if (status === window.google.maps.DirectionsStatus.OK) {
