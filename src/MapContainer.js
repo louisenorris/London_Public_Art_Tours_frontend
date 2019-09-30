@@ -97,9 +97,10 @@ class MapContainer extends Component {
               </>
             ) : (
               <>
-                <Button.Group widths="4" color='black'>
+                <Button.Group widths="5" color='black'>
                   <Button onClick={() => this.props.showAddToTourBtnOnInfoWin()} ><Icon name="add circle" /></Button>
                   <Button as={Link} to="/account" exact ><Icon name="user circle outline" /></Button>
+                  <Button onClick={() => this.props.showAllArtworks()} as={Link} to="/" exact ><Icon name="home" /></Button>
                   <Button as={Link} to="/tours" exact ><Icon name="map" /></Button>
                   <Button onClick={this.props.logOut} ><Icon name="sign-out" /></Button>
                 </Button.Group>
