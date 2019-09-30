@@ -7,7 +7,7 @@ class TourCard extends Component {
     render() {
         return (
             <div>
-              <h2 className="menu">{this.props.tour.name}</h2>
+              <h4 className="menu">{this.props.tour.name}</h4>
                 {
                   this.props.tour.tour_artworks.map(tour_artwork => <Artwork 
                                                                         tour_artwork={tour_artwork} 
@@ -19,6 +19,8 @@ class TourCard extends Component {
                         Get directions
                     </NavLink>
                 </button>
+                <br/>
+                <br/>
             </div>
         );
     }

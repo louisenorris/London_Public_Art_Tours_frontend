@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button } from 'semantic-ui-react'
 
 class EditUser extends Component {
 
@@ -29,16 +30,21 @@ class EditUser extends Component {
 
     render() {
         return (
+          <>
+          <h2 className="intro">Edit your details below</h2>
             <form onSubmit={(e) => this.props.handleEditSubmit(e, this.state)}>
             <label>Username:</label>
-            <input type="text" name="username" value={this.state.username} onChange={this.handleChange}/>
+            <input className="loginSignup" type="text" name="username" value={this.state.username} onChange={this.handleChange}/>
             <label>Email:</label>
-            <input type="text" name="email" value={this.state.email} onChange={this.handleChange}/>
+            <input className="loginSignup" type="text" name="email" value={this.state.email} onChange={this.handleChange}/>
             <div>
-              <input type="submit" value="Save" />
+              {/* <input type="submit" value="Save" /> */}
+              <Button color='black' size='small' type='submit'>Save</Button>
+              <Button color='black' size='small' onClick={this.props.handleEditClick} >Cancel</Button>
               {/* <button onClick={this.props.handleCancel} type="button">Delete Account</button> */}
             </div>
           </form>
+          </>
         );
     }
 }

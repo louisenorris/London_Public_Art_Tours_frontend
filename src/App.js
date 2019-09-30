@@ -59,7 +59,9 @@ class App extends React.Component {
 
   logOut = () => {
     API.clearToken()
-    this.setState({user: null})
+    this.setState({
+      user: null,
+      loginSignupClicked: false})
     this.props.history.push("/")
   }
 
@@ -112,7 +114,7 @@ class App extends React.Component {
       tourInProgress: [],
       user: {...this.state.user, tours: [...this.state.user.tours, data.tour]}
     }))
-    .then(this.props.history.push("/account"))
+    // .then(this.props.history.push("/account"))
   }
 
   // /ARTWORKS ON MAP METHODS ///
@@ -211,7 +213,8 @@ class App extends React.Component {
           <br/> 
           <br/> 
           </div>
-          {/* <img style={{position: 'relative', width: '100%', bottom: "2.5%"}} className="center" src={require("./london-skyline-isolated-big-hi.png")} alt="london"/> */}
+          <br/> 
+          <img style={{position: 'relative', width: '100%', bottom: "2.5%"}} className="center" src={require("./london-skyline-isolated-big-hi.png")} alt="london"/>
         </>
       )
     }
@@ -222,6 +225,7 @@ class App extends React.Component {
       <>
       <CssBaseline />
       <Container maxWidth="sm" style={{height: '95vh'}}>
+        <br/>
         <h1 className="title">Public Art London</h1>   
 
         {this.renderContent()}
@@ -279,7 +283,7 @@ class App extends React.Component {
         } */}
         <Route exact path="/login" component={(props) => <Login {...props} handleSubmit={this.logIn} />}/>
         <Route exact path="/signup" component={(props) => <Signup {...props} handleSubmit={this.signUp} />}/> 
-        <Route exact path="/account" component={(props) => <UserContainer {...props} user={this.state.user} updateUser={this.updateUser} deleteUser={this.deleteUser} handleShowTourOnMap={this.handleShowTourOnMap} />} />
+        <Route exact path="/account" component={(props) => <UserContainer {...props} user={this.state.user} updateUser={this.updateUser} deleteUser={this.deleteUser} handleShowTourOnMap={this.handleShowTourOnMap} artworks={this.state.artworks}/>} />
         <Route exact path="/tours" component={(props) => <TourContainer {...props} tours={this.state.tours} artworks={this.state.artworks} handleShowTourOnMap={this.handleShowTourOnMap} />} />
       </Container>
     </>

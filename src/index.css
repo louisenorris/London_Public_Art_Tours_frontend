@@ -66,6 +66,10 @@ code {
   color: black
 }
 
+.bold {
+  font-weight: bold;
+}
+
 .Background {
   background-image: url(./London_Map.png);
 }

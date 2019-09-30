@@ -70,13 +70,13 @@ class Map extends Component {
     }
 
     componentDidMount(){
-        // debugger
+        debugger
         if (this.props.selectedTour) {
             const directionsService = new window.google.maps.DirectionsService();
             const directionsRenderer = new window.google.maps.DirectionsRenderer();
             const wholeTour = this.props.selectedTour
             const lastInTour = wholeTour[wholeTour.length-1]
-    
+    debugger
             const origin = { lat: wholeTour[0].lat, lng: wholeTour[0].lng };
             const destination = { lat: lastInTour.lat, lng: lastInTour.lng };
             const middleArtworks = wholeTour.slice(1, -1)
@@ -84,7 +84,7 @@ class Map extends Component {
                 location: new window.google.maps.LatLng(wp.lat, wp.lng),
                 stopover: true }  
             })
-    // debugger
+    debugger
         directionsService.route(
           {
             origin: origin,
@@ -108,6 +108,18 @@ class Map extends Component {
         }
     }
 
+    componentDidUpdate(){
+        if (this.state.directions) {
+            debugger
+            const steps = document.querySelectorAll(".adp-text") 
+        }
+    
+    }
+
+    // changes = document.querySelectorAll(".adp-text")
+    // Array.from(changes)
+    // tochange = Array.from(changes)
+    // tochange.map(change => change.innerHTML = "new")
 
     render() {
         return (

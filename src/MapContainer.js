@@ -90,7 +90,7 @@ class MapContainer extends Component {
                       this.state.tour_name,
                       this.props.user
                     )
-                  } as={Link} to="/tours" exact ><Icon name="save" /></Button>
+                  } as={Link} to="/account" exact ><Icon name="save" /></Button>
                   <Button onClick={this.props.cancelTour} ><Icon name="cancel" /></Button>
                   <Button onClick={this.props.logOut} ><Icon name="sign-out" /></Button>
                 </Button.Group>

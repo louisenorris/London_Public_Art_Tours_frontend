@@ -1,5 +1,6 @@
 import React from 'react';
 // import Button from '@material-ui/core/Button';
+import { Button } from 'semantic-ui-react'
 
 
 class Signup extends React.Component {
@@ -35,8 +36,16 @@ class Signup extends React.Component {
             <br/>
             <input className="loginSignup" value={this.state.password} onChange={this.handleChangePassword} type='password' placeholder='Password' />
             <br/>
-            <button className="Button" type='submit'>Sign up</button>
+            <Button color='black' type='submit'>Sign up</Button>
         </form>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+       
+        <img style={{position: 'relative', width: '100%', bottom: "2.5%"}} className="center" src={require("./london-skyline-isolated-big-hi.png")} alt="london"/>
         </>
     );
     }
