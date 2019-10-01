@@ -6,11 +6,12 @@ import { Link } from "react-router-dom";
 class AccountDetails extends Component {
     render() {
         return (
-            <div>
+            <div >
+                <div style={{overflow: 'scroll', height: '56em'}} >
                 {
                     this.props.user ? 
                     <>
-                    <h2 className="intro">Account details</h2>
+                    <h2 className="introlight">Account details</h2>
                     <span className="bold">Username: </span><span>{this.props.user.username}</span>
                     <br/>
                     <br/>
@@ -18,23 +19,25 @@ class AccountDetails extends Component {
                     <br/>
                     <br/>
 
-                    <Button color='black' onClick={this.props.handleEditClick} >Edit user</Button>
-                    <Button color='black' onClick={() => this.props.deleteUser(this.props.user.id)} >Delete account</Button>
+                    <Button color='black' style={{maxHeight: '30px', padding: '5px'}} onClick={this.props.handleEditClick} >Edit user</Button>
+                    <Button color='black' style={{maxHeight: '30px', padding: '5px'}} onClick={() => this.props.deleteUser(this.props.user.id)} >Delete account</Button>
 
-                    {/* <button onClick={this.props.handleEditClick}>Edit user</button> */}
-                    {/* <button onClick={() => this.props.deleteUser(this.props.user.id)}>Delete account</button> */}
-
-                    <h2 className="intro">Your tours</h2>
+                   
+                    <br/>
+                    <h2 className="introlight">Your tours</h2>
                     {
                     this.props.user.tours.map(tour => 
                         <>
-                        <Image avatar bordered alt="map avatar" src={require(`./london_avatar.png`)}/>
-                        <span className="menu">{tour.name}</span>
-                        <button onClick={() => this.props.handleShowTourOnMap(tour.id)} >
+                        <Icon name="map outline" />
+                        <span>{tour.name}</span>
+                        {/* <button onClick={() => this.props.handleShowTourOnMap(tour.id)} >
                         <NavLink to="/" exact>
                             Get directions
                         </NavLink>
-                        </button>
+                        </button> */}
+                        <br/>
+                        <Button color='black' style={{maxHeight: '30px', padding: '5px', margin: '2px'}} onClick={() => this.props.handleShowTourOnMap(tour.id)} as={Link} to="/" exact >Get directions</Button>
+                        <br/>
                         <br/>
                         </>)
                     }
@@ -42,6 +45,7 @@ class AccountDetails extends Component {
                     : null
                 }
                 <br/>
+                </div>
                 <Button.Group widths="3" color='black'>
                   <Button as={Link} to="/tours" exact ><Icon name="map" /></Button>
                   <Button onClick={() => this.props.showAllArtworks()} as={Link} to="/" exact ><Icon name="home" /></Button>

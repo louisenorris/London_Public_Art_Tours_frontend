@@ -8,7 +8,7 @@ import NavBar from './NavBar.js';
 import UserContainer from './UserContainer.js';
 import TourContainer from './TourContainer.js';
 import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline'; 
+// import CssBaseline from '@material-ui/core/CssBaseline'; 
 import backgroundImg from './London_Map4.png'
 
 
@@ -188,10 +188,16 @@ class App extends React.Component {
           <div style={{
           backgroundImage: "url(" + backgroundImg + ")",
           backgroundSize: "cover",
-          backgroundPosition: "center center",
+          backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          backgroundOpacity: 0.5
+          height: '100%'
           }}>
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
           < NavBar user={this.state.user} signUp={this.signUp} logIn={this.logIn} handleLoginSignupClicked={this.handleLoginSignupClicked}/>
           <br/> 
           <br/> 
@@ -204,7 +210,7 @@ class App extends React.Component {
           <br/> 
           <br/> 
           <br/> 
-          <h1 className="intro">Mapping app to aid navigation around London's public art. Discover ready-made tours or create your own experience.</h1>
+          <h1 className="introlight">Mapping app to aid navigation around London's public art. Discover ready-made tours or create your own experience.</h1>
           <br/> 
           <br/> 
           <br/> 
@@ -212,10 +218,9 @@ class App extends React.Component {
           <br/> 
           <br/> 
           <br/> 
+          {/* <img style={{position: 'relative', width: '100%', bottom: "2.5%"}} className="center" src={require("./london-skyline-isolated-big-hi.png")} alt="london"/> */}
           </div>
-          <br/> 
-          <img style={{position: 'relative', width: '100%', bottom: "2.5%"}} className="center" src={require("./london-skyline-isolated-big-hi.png")} alt="london"/>
-        </>
+          </>
       )
     }
   }
@@ -223,9 +228,8 @@ class App extends React.Component {
   render() {
     return (
       <>
-      <CssBaseline />
-      <Container maxWidth="sm" style={{height: '95vh'}}>
-        <br/>
+      {/* <CssBaseline /> */}
+      <Container maxWidth="sm" style={{height: '100%', marginTop: '5px' }}>
         <h1 className="title">Public Art London</h1>   
 
         {this.renderContent()}
@@ -284,7 +288,7 @@ class App extends React.Component {
         <Route exact path="/login" component={(props) => <Login {...props} handleSubmit={this.logIn} />}/>
         <Route exact path="/signup" component={(props) => <Signup {...props} handleSubmit={this.signUp} />}/> 
         <Route exact path="/account" component={(props) => <UserContainer {...props} user={this.state.user} updateUser={this.updateUser} deleteUser={this.deleteUser} handleShowTourOnMap={this.handleShowTourOnMap} artworks={this.state.artworks} showAllArtworks={this.showAllArtworks} logOut={this.logOut}/>} />
-        <Route exact path="/tours" component={(props) => <TourContainer {...props} tours={this.state.tours} artworks={this.state.artworks} handleShowTourOnMap={this.handleShowTourOnMap} logOut={this.logOut}/>} />
+        <Route exact path="/tours" component={(props) => <TourContainer {...props} tours={this.state.tours} artworks={this.state.artworks} handleShowTourOnMap={this.handleShowTourOnMap} logOut={this.logOut} showAllArtworks={this.showAllArtworks}/>} />
       </Container>
     </>
     )

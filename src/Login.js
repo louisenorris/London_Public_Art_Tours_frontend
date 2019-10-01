@@ -26,15 +26,14 @@ render(){
             <br/>
             <input className="loginSignup" type='password' value={this.state.password} onChange={this.handleChangePassword} placeholder='Password' />
             <br/>
-            {/* <button className="Button" type='submit'>LOGIN</button> */}
-            <Button color='black' type='submit'>Login</Button>
+            <Button style={{maxHeight: '30px', padding: '5px'}} color='black' type='submit'>Login</Button>
         </form>
         <br/>
         <br/>
         <br/>
         <br/>
         <br/>
-        <img style={{position: 'relative', width: '100%', bottom: "2.5%"}} className="center" src={require("./london-skyline-isolated-big-hi.png")} alt="london"/>
+        {/* <img style={{position: 'relative', width: '100%', bottom: "2.5%"}} className="center" src={require("./london-skyline-isolated-big-hi.png")} alt="london"/> */}
 
         </>
     );

@@ -4,6 +4,7 @@ const loginURL = `${endpoint}/login`
 const validateURL = `${endpoint}/validate`
 const artworksURL = `${endpoint}/artworks`
 const toursURL = `${endpoint}/tours`
+const finduserUrl = `${endpoint}/finduser`
 
 const jsonify = res => {
     if (res.ok)
@@ -90,6 +91,11 @@ const getTours = () => {
     .then(jsonify)
 }
 
+const getTourCreatingUser = (userId) => {
+    return fetch(finduserUrl + `/${userId}`)
+    .then(jsonify)
+}
+
 const createTour = (artworks, tourName) => {
     const artworkIds = artworks.map(artwork => {return {artwork_id: artwork.id}})
     return fetch(toursURL, {
@@ -117,5 +123,6 @@ export default {
     updateUser,
     deleteUser,
     getTours,
-    createTour
+    createTour,
+    getTourCreatingUser
 }

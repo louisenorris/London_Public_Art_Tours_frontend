@@ -1,54 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from "react-router-dom";
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-// import Button from '@material-ui/core/Button';
-import { grey } from '@material-ui/core/colors';
-import { flexbox } from '@material-ui/system';
 import Container from '@material-ui/core/Container';
 import { Button } from 'semantic-ui-react'
 
-// const ColorButton = withStyles(theme => ({
-//   root: {
-//     color: theme.palette.getContrastText(grey[900]),
-//     backgroundColor: grey[900],
-//     '&:hover': {
-//       backgroundColor: grey[900],
-//     },
-//   },
-// }))(Button);
-
-// const useStyles = makeStyles(theme => ({
-//   margin: {
-//     margin: theme.spacing(3),
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//     textAlign: 'center',
-//     minWidth: 100,
-//   },
-// }));
-
-// class NavBar extends Component {
 
 const NavBar = (props) => {
 
-  // const classes = useStyles();
-    // render() {
         return (
               <Container style={{ textAlign: 'center'}} maxWidth="sm">
                 <br/> 
-                {/* <ColorButton onClick={() => props.handleLoginSignupClicked()} variant="contained" color="accent" className={classes.margin} component={Link} to="/signup" exact >
-                      Sign up
-                </ColorButton> */}
-                <Button color='black' style={{ margin: '20px', minWidth: 100}} onClick={() => props.handleLoginSignupClicked()} as={Link} to="/signup" exact >Sign up</Button>
-                
+                <Button color='black' style={{ margin: '20px', fontFamily: 'Permanent Marker', fontWeight: 'lighter', minWidth: 200, maxHeight: '30px', padding: '5px'}} onClick={() => props.handleLoginSignupClicked()} as={Link} to="/signup" exact >Sign up</Button>
                
-                <Button color='black' style={{ margin: '20px', minWidth: 100}} onClick={() => props.handleLoginSignupClicked()} as={Link} to="/login" exact >Login</Button>
-
-                {/* <ColorButton onClick={() => props.handleLoginSignupClicked()} variant="contained" color="accent" className={classes.margin} component={Link} to="/login" exact >
-                      Login
-                </ColorButton> */}
+                <Button color='black' style={{ margin: '20px', fontFamily: 'Permanent Marker', fontWeight: 'lighter', minWidth: 200, maxHeight: '30px', padding: '5px'}} onClick={() => props.handleLoginSignupClicked()} as={Link} to="/login" exact >Login</Button>
                 <br/>
               </Container>
+             
         );
     // }
 }

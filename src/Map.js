@@ -1,6 +1,5 @@
 import React, { Component, useState } from 'react';
 import { withScriptjs, GoogleMap, withGoogleMap, Marker, InfoWindow, DirectionsRenderer } from 'react-google-maps';
-import { Button, Icon } from 'semantic-ui-react'
 
 function GoogleMapRender(props) {
     const [selectedArtwork, setSelectedArtwork] = useState(null);
@@ -35,6 +34,7 @@ function GoogleMapRender(props) {
                 <>
                 <h3>{selectedArtwork.title}</h3>
                 <p>{selectedArtwork.artist}</p>
+                <p>{selectedArtwork.year}</p>
                 <img class="ui bottom aligned tiny image" src={require(`../public/imgs/${selectedArtwork.title.toLowerCase().split(' ').join('_')}.jpg`)} alt="artwork"/>
                 {
                     props.addToTourBtn ? 
@@ -98,8 +98,25 @@ class Map extends Component {
               this.setState({
                 directions: result
               });
-              directionsRenderer.setPanel(document.getElementById('directionsPanel'))
+            //   directionsRenderer.setPanel(document.getElementById('directionsPanel'))
               directionsRenderer.setDirections(result);
+              const route = result.routes[0];
+              const summaryPanel = document.getElementById('directionsPanel');
+              summaryPanel.innerHTML = '';
+              // for each route show summary information
+              for (let i = 0; i < route.legs.length; i++) {
+                  let routeSegment = i + 1;
+                  summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment + '</b><br>';
+                  summaryPanel.innerHTML += this.findArtworkForDirections(route.legs[i].start_address)
+                  summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+                  summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+                  summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
+                  summaryPanel.innerHTML += '<b>Instructions:</b><br>';
+                //   debugger
+                  for (let j = 0; j < route.legs[i].steps.length; j++) {
+                      summaryPanel.innerHTML += '<li>' + route.legs[i].steps[j].instructions + '</li>';
+                  }
+              }
             } else {
               console.error(`error fetching directions ${result}`);
             }
@@ -108,12 +125,17 @@ class Map extends Component {
         }
     }
 
+    findArtworkForDirections = (routeLegAddress) => {
+       return this.props.artworks.find(artwork => artwork.address === routeLegAddress).title
+    }
+
+
     componentDidUpdate(){
-        if (this.state.directions && document.querySelector('#directionsPanel')) {
+        // if (document.querySelector(".adp-text").innerHTML) {
             // debugger
-            const steps = document.querySelectorAll(".adp-text") 
+            // const steps = document.querySelectorAll(".adp-text") 
             // debugger
-        }
+
     }
 
     // changes = document.querySelectorAll(".adp-text")
@@ -122,13 +144,14 @@ class Map extends Component {
     // tochange.map(change => change.innerHTML = "new")
 
     render() {
+        // debugger
         return (
             <div>
                 <MapWrapped
                 artworks={this.props.artworks}
                 googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}`}
                 loadingElement={<div style={{ height: '100%'}} />}
-                containerElement={<div style={{ height: '400px' }} />}
+                containerElement={<div style={{ height: '600px' }} />}
                 mapElement={<div style={{ height: '100%'}} />}
                 addToTourBtn={this.props.addToTourBtn}
                 handleNewTour={this.props.handleNewTour}
