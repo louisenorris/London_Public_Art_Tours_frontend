@@ -7,7 +7,7 @@ const Artwork = (props) => {
 
     return (
         <>
-            <img style={{margin: "3.0625px 3.0625px 0px 0px"}} className="ui avatar image" src={require(`../public/imgs/${artworkInTour.title.toLowerCase().split(' ').join('_')}.jpg`)} alt="artwork"/>
+            <img style={{margin: "3.0625px 3.0625px 0px 0px"}} className="ui avatar image" src={`/imgs/${artworkInTour.title.toLowerCase().split(' ').join('_')}.jpg`} alt="artwork"/>
             <span>{artworkInTour.title} by {artworkInTour.artist}</span>
             <br/>
         </>
