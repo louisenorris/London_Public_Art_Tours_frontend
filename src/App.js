@@ -21,9 +21,8 @@ class App extends React.Component {
     tourInProgress: [],
     addToTourBtn: false,
     tours: null,
-    selectedTour: null,
-    selectedTourName: null,
-    loginSignupClicked: false
+    loginSignupClicked: false,
+    selectedTourID: null
   }
   
   componentDidMount() {
@@ -121,11 +120,7 @@ class App extends React.Component {
   // /ARTWORKS ON MAP METHODS ///
 
   handleShowTourOnMap = (tourId) => {
-    const findArtworks = this.state.artworks.filter(artwork => artwork.tour_artworks.find(tour_artwork => tour_artwork.tour_id === tourId))
-    const findTour = this.state.tours.find(tour => tour.id === tourId).name
-    this.setState({
-      selectedTour: findArtworks,
-      selectedTourName: findTour})
+    this.setState({selectedTourID: tourId})
   }
 
   handleArtworkSearch = (event) => {
@@ -170,8 +165,9 @@ class App extends React.Component {
                                                   cancelTour={this.cancelTour}
                                                   handleCancelArtwork={this.handleCancelArtwork}
                                                   createTour={this.createTour}
-                                                  selectedTour={this.state.selectedTour}
-                                                  selectedTourName={this.state.selectedTourName}
+                                                  // selectedTour={this.state.selectedTour}
+                                                  // selectedTourName={this.state.selectedTourName}
+                                                  selectedTourID={this.state.selectedTourID}
                                                 />
                                               } 
               />

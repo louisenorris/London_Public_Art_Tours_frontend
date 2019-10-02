@@ -1,5 +1,6 @@
 import React, { Component, useState } from 'react';
 import { withScriptjs, GoogleMap, withGoogleMap, Marker, InfoWindow, DirectionsRenderer } from 'react-google-maps';
+import API from './adapters/API.js'
 
 function GoogleMapRender(props) {
     const [selectedArtwork, setSelectedArtwork] = useState(null);
@@ -9,7 +10,7 @@ function GoogleMapRender(props) {
         defaultCenter={{ lat: 51.4993233, lng: -0.1144514 }}
         defaultZoom={13}
     >
-        {props.artworks ? 
+        {props.artworks && !props.selectedTour ? 
             (props.artworks.map(artwork =>
                 <Marker
                     key={artwork.id}
@@ -18,7 +19,16 @@ function GoogleMapRender(props) {
                         lng: artwork.lng
                     }}
                     onClick={() => setSelectedArtwork(artwork)}
-
+                />
+            )) : props.selectedTour ? 
+            (props.selectedTour.artworks.map(artwork =>
+                <Marker
+                    key={artwork.id}
+                    position={{
+                        lat: artwork.lat,
+                        lng: artwork.lng
+                    }}
+                    onClick={() => setSelectedArtwork(artwork)}
                 />
             )) : (null) }
         {selectedArtwork && (
@@ -66,15 +76,29 @@ const MapWrapped = withScriptjs(withGoogleMap(GoogleMapRender))
 
 class Map extends Component {
 
-    state = {
-        directions: null
+    constructor(props) {
+        super(props);
+        this.state = {
+            directions: null,
+            selectedTour: null
+        }
     }
 
-    componentDidMount(){
-        if (this.props.selectedTour) {
+    handleNewShowTourOnMap = (selectedTourID) => {
+        API.getSelectedTour(selectedTourID)
+        .then(data => this.setState({selectedTour: data.tour}, () => console.log("g"))
+    )}
+
+    componentDidMount() {
+        if (this.props.selectedTourID) this.handleNewShowTourOnMap(this.props.selectedTourID) 
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        if (prevState !== this.state && this.state.selectedTour) {
+            console.log("j")
             const directionsService = new window.google.maps.DirectionsService();
             const directionsRenderer = new window.google.maps.DirectionsRenderer();
-            const wholeTour = this.props.selectedTour
+            const wholeTour = this.state.selectedTour.artworks
             const lastInTour = wholeTour[wholeTour.length-1]
             const origin = { lat: wholeTour[0].lat, lng: wholeTour[0].lng };
             const destination = { lat: lastInTour.lat, lng: lastInTour.lng };
@@ -103,17 +127,16 @@ class Map extends Component {
               summaryPanel.innerHTML = '';
               // for each route show summary information
               summaryPanel.innerHTML += '<br>';
-              summaryPanel.innerHTML += '<b>Tour: ' + this.props.selectedTourName + '</b><br><br>';
+              summaryPanel.innerHTML += '<b>Tour: ' + this.state.selectedTour.name + '</b><br><br>';
               summaryPanel.innerHTML += '<b>The Route:</b><br>';
               for (let i = 0; i < route.legs.length; i++) {
                   let routeSegment = i + 1;
                   summaryPanel.innerHTML += '<br><b>Artwork ' + routeSegment + ': ' + this.findArtworkForDirections(route.legs[i].start_address) + ' by ' + this.findArtistForDirections(route.legs[i].start_address) + '<br>';
                   summaryPanel.innerHTML += this.findArtworkYearForDirections(route.legs[i].start_address) + '<br>';
-                  summaryPanel.innerHTML += `<img class="image" src="/imgs/${this.findArtworkForDirections(route.legs[i].start_address).toLowerCase().split(' ').join('_')}.jpg" alt="artwork"/><br>`;
+                  summaryPanel.innerHTML += `<img class="directionsimage" src="/imgs/${this.findArtworkForDirections(route.legs[i].start_address).toLowerCase().split(' ').join('_')}.jpg" alt="artwork"/><br>`;
                   summaryPanel.innerHTML += this.findArtworkDescForDirections(route.legs[i].start_address) + '<br>';
                   summaryPanel.innerHTML += '<br>';
                   summaryPanel.innerHTML += '<b>Step ' + routeSegment + ': ' + this.findArtworkForDirections(route.legs[i].start_address) +' to ' + this.findArtworkForDirections(route.legs[i].end_address) + '</b><br>';
-                //   summaryPanel.innerHTML += this.findArtworkForDirections(route.legs[i].start_address)
                   summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
                   summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
                   summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
@@ -125,7 +148,7 @@ class Map extends Component {
               let lastStep = route.legs[route.legs.length-1].end_address
                   summaryPanel.innerHTML += '<br><b>Artwork ' + (route.legs.length+1) + ': ' + this.findArtworkForDirections(lastStep) + ' by ' + this.findArtistForDirections(lastStep) + '<br>';
                   summaryPanel.innerHTML += this.findArtworkYearForDirections(lastStep) + '<br>';
-                  summaryPanel.innerHTML += `<img class="image" src="/imgs/${this.findArtworkForDirections(lastStep).toLowerCase().split(' ').join('_')}.jpg" alt="artwork"/><br>`;
+                  summaryPanel.innerHTML += `<img class="directionsimage" src="/imgs/${this.findArtworkForDirections(lastStep).toLowerCase().split(' ').join('_')}.jpg" alt="artwork"/><br>`;
                   summaryPanel.innerHTML += this.findArtworkDescForDirections(lastStep) + '<br>';
                   summaryPanel.innerHTML += '<br>';
             } else {
@@ -137,19 +160,19 @@ class Map extends Component {
     }
 
     findArtworkForDirections = (routeLegAddress) => {
-       return this.props.artworks.find(artwork => artwork.address === routeLegAddress).title
+       return this.state.selectedTour.artworks.find(artwork => artwork.address === routeLegAddress).title
     }
 
     findArtistForDirections = (routeLegAddress) => {
-        return this.props.artworks.find(artwork => artwork.address === routeLegAddress).artist
+        return this.state.selectedTour.artworks.find(artwork => artwork.address === routeLegAddress).artist
      }
 
      findArtworkYearForDirections = (routeLegAddress) => {
-        return this.props.artworks.find(artwork => artwork.address === routeLegAddress).year
+        return this.state.selectedTour.artworks.find(artwork => artwork.address === routeLegAddress).year
      }
 
      findArtworkDescForDirections = (routeLegAddress) => {
-        return this.props.artworks.find(artwork => artwork.address === routeLegAddress).description
+        return this.state.selectedTour.artworks.find(artwork => artwork.address === routeLegAddress).description
      }
 
     render() {
@@ -163,9 +186,10 @@ class Map extends Component {
                 mapElement={<div style={{ height: '100%'}} />}
                 addToTourBtn={this.props.addToTourBtn}
                 handleNewTour={this.props.handleNewTour}
-                selectedTour={this.props.selectedTour}
-                selectedTourName={this.props.selectedTourName}
+                selectedTour={this.state.selectedTour}
+                // selectedTourName={this.props.selectedTourName}
                 directions={this.state.directions}
+                selectedTourID={this.props.selectedTourID}
                 />
                 <div id='directionsPanel'></div> 
             </div>

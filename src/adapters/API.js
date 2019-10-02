@@ -91,6 +91,11 @@ const getTours = () => {
     .then(jsonify)
 }
 
+const getSelectedTour = (tourId) => {
+    return fetch(toursURL + `/${tourId}`)
+    .then(jsonify)
+}
+
 const getTourCreatingUser = (userId) => {
     return fetch(finduserUrl + `/${userId}`)
     .then(jsonify)
@@ -124,5 +129,6 @@ export default {
     deleteUser,
     getTours,
     createTour,
-    getTourCreatingUser
+    getTourCreatingUser,
+    getSelectedTour
 }
