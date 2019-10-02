@@ -130,7 +130,7 @@ class App extends React.Component {
   showAllArtworks = () => {
     this.setState({
       searchTerm: "",
-      selectedTour: null
+      selectedTourID: null
     })
   } 
 
