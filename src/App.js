@@ -22,6 +22,7 @@ class App extends React.Component {
     addToTourBtn: false,
     tours: null,
     selectedTour: null,
+    selectedTourName: null,
     loginSignupClicked: false
   }
   
@@ -121,7 +122,10 @@ class App extends React.Component {
 
   handleShowTourOnMap = (tourId) => {
     const findArtworks = this.state.artworks.filter(artwork => artwork.tour_artworks.find(tour_artwork => tour_artwork.tour_id === tourId))
-    this.setState({selectedTour: findArtworks})
+    const findTour = this.state.tours.find(tour => tour.id === tourId).name
+    this.setState({
+      selectedTour: findArtworks,
+      selectedTourName: findTour})
   }
 
   handleArtworkSearch = (event) => {
@@ -167,6 +171,7 @@ class App extends React.Component {
                                                   handleCancelArtwork={this.handleCancelArtwork}
                                                   createTour={this.createTour}
                                                   selectedTour={this.state.selectedTour}
+                                                  selectedTourName={this.state.selectedTourName}
                                                 />
                                               } 
               />
@@ -231,60 +236,8 @@ class App extends React.Component {
       {/* <CssBaseline /> */}
       <Container maxWidth="sm" style={{height: '100%', marginTop: '5px' }}>
         <h1 className="title">Public Art London</h1>   
-
         {this.renderContent()}
-        {/* {
-          this.state.user && !this.state.user.error ? (
-            <Route exact path='/' component={() => <MapContainer 
-                                                      user={this.state.user} 
-                                                      artworks={this.searchAndFilterArtworks()} 
-                                                      handleArtworkSearch={this.handleArtworkSearch} 
-                                                      searchTerm={this.state.searchTerm} 
-                                                      logOut={this.logOut}
-                                                      showAddToTourBtnOnInfoWin={this.showAddToTourBtnOnInfoWin}
-                                                      addToTourBtn={this.state.addToTourBtn}
-                                                      showAllArtworks={this.showAllArtworks}
-                                                      tours={this.state.tours}
-                                                      handleNewTour={this.handleNewTour}
-                                                      tourInProgress={this.state.tourInProgress}
-                                                      cancelTour={this.cancelTour}
-                                                      handleCancelArtwork={this.handleCancelArtwork}
-                                                      createTour={this.createTour}
-                                                      selectedTour={this.state.selectedTour}
-                                                    />
-                                            } 
-            />
-          ) : (
-            <>
-            <br/> 
-            <br/> 
-            <br/> 
-            <br/> 
-            <br/> 
-            <br/> 
-            < NavBar user={this.state.user} signUp={this.signUp} logIn={this.logIn} handleLoginSignupClicked={this.handleLoginSignupClicked}/>
-            <br/> 
-            <br/> 
-            <br/> 
-            <br/> 
-            <br/> 
-            <br/> 
-            <br/> 
-            <br/> 
-            <p className="nav">Mapping app to aid navigation around London's public art. Discover ready-made tours or create your own experience.</p>
-            <br/> 
-            <br/> 
-          
-            <br/> 
-            <br/> 
-            <br/> 
-            <br/> 
-            <br/> 
-            <br/> 
-            <img style={{position: 'relative', width: '100%', bottom: "2.5%"}} className="center" src={require("./london-skyline-isolated-big-hi.png")} alt="london"/>
-            </> 
-          )
-        } */}
+
         <Route exact path="/login" component={(props) => <Login {...props} handleSubmit={this.logIn} />}/>
         <Route exact path="/signup" component={(props) => <Signup {...props} handleSubmit={this.signUp} />}/> 
         <Route exact path="/account" component={(props) => <UserContainer {...props} user={this.state.user} updateUser={this.updateUser} deleteUser={this.deleteUser} handleShowTourOnMap={this.handleShowTourOnMap} artworks={this.state.artworks} showAllArtworks={this.showAllArtworks} logOut={this.logOut}/>} />

@@ -24,6 +24,7 @@ class MapContainer extends Component {
               addToTourBtn={this.props.addToTourBtn}
               handleNewTour={this.props.handleNewTour}
               selectedTour={this.props.selectedTour}
+              selectedTourName={this.props.selectedTourName}
             />
 
             <SearchBar

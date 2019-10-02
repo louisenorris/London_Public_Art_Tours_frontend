@@ -47,6 +47,7 @@ function GoogleMapRender(props) {
         {props.directions && <DirectionsRenderer 
                                 artworks={props.artworks}
                                 directions={props.directions} 
+                                selectedTourName={props.selectedTourName}
                                 options={{
                                     polylineOptions: {
                                         storkeColor: props.storkeColor,
@@ -70,13 +71,11 @@ class Map extends Component {
     }
 
     componentDidMount(){
-        // debugger
         if (this.props.selectedTour) {
             const directionsService = new window.google.maps.DirectionsService();
             const directionsRenderer = new window.google.maps.DirectionsRenderer();
             const wholeTour = this.props.selectedTour
             const lastInTour = wholeTour[wholeTour.length-1]
-    // debugger
             const origin = { lat: wholeTour[0].lat, lng: wholeTour[0].lng };
             const destination = { lat: lastInTour.lat, lng: lastInTour.lng };
             const middleArtworks = wholeTour.slice(1, -1)
@@ -84,7 +83,6 @@ class Map extends Component {
                 location: new window.google.maps.LatLng(wp.lat, wp.lng),
                 stopover: true }  
             })
-    // debugger
         directionsService.route(
           {
             origin: origin,
@@ -104,18 +102,22 @@ class Map extends Component {
               const summaryPanel = document.getElementById('directionsPanel');
               summaryPanel.innerHTML = '';
               // for each route show summary information
+              summaryPanel.innerHTML += '<br>';
+              summaryPanel.innerHTML += '<b>' + this.props.selectedTourName + '</b><br><br>';
+              summaryPanel.innerHTML += '<b>The Route:</b><br>';
               for (let i = 0; i < route.legs.length; i++) {
                   let routeSegment = i + 1;
-                  summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment + '</b><br>';
-                  summaryPanel.innerHTML += this.findArtworkForDirections(route.legs[i].start_address)
+                  summaryPanel.innerHTML += '<br>';
+                  summaryPanel.innerHTML += '<b>Step ' + routeSegment + ': ' + this.findArtworkForDirections(route.legs[i].start_address) +' to ' + this.findArtworkForDirections(route.legs[i].end_address) + '</b><br>';
+                //   summaryPanel.innerHTML += `<img style={{margin: "3.0625px 3.0625px 0px 0px"}} className="ui avatar image" src={require('../public/imgs/${this.findArtworkForDirections(route.legs[i].start_address).toLowerCase().split(' ').join('_')}.jpg')} alt="artwork"/>`;
+                //   summaryPanel.innerHTML += this.findArtworkForDirections(route.legs[i].start_address)
                   summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
                   summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
                   summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
-                  summaryPanel.innerHTML += '<b>Instructions:</b><br>';
-                //   debugger
-                  for (let j = 0; j < route.legs[i].steps.length; j++) {
-                      summaryPanel.innerHTML += '<li>' + route.legs[i].steps[j].instructions + '</li>';
-                  }
+                  summaryPanel.innerHTML += '<b>Directions:</b><br>';
+                    for (let j = 0; j < route.legs[i].steps.length; j++) {
+                        summaryPanel.innerHTML += '<li>' + route.legs[i].steps[j].instructions + '</li>';
+                    }
               }
             } else {
               console.error(`error fetching directions ${result}`);
@@ -129,22 +131,7 @@ class Map extends Component {
        return this.props.artworks.find(artwork => artwork.address === routeLegAddress).title
     }
 
-
-    componentDidUpdate(){
-        // if (document.querySelector(".adp-text").innerHTML) {
-            // debugger
-            // const steps = document.querySelectorAll(".adp-text") 
-            // debugger
-
-    }
-
-    // changes = document.querySelectorAll(".adp-text")
-    // Array.from(changes)
-    // tochange = Array.from(changes)
-    // tochange.map(change => change.innerHTML = "new")
-
     render() {
-        // debugger
         return (
             <div>
                 <MapWrapped
@@ -156,6 +143,7 @@ class Map extends Component {
                 addToTourBtn={this.props.addToTourBtn}
                 handleNewTour={this.props.handleNewTour}
                 selectedTour={this.props.selectedTour}
+                selectedTourName={this.props.selectedTourName}
                 directions={this.state.directions}
                 />
                 <div id='directionsPanel'></div> 
