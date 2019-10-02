@@ -107,6 +107,9 @@ class Map extends Component {
               summaryPanel.innerHTML += '<b>The Route:</b><br>';
               for (let i = 0; i < route.legs.length; i++) {
                   let routeSegment = i + 1;
+                  summaryPanel.innerHTML += '<br><b>Artwork ' + routeSegment + ': ' + this.findArtworkForDirections(route.legs[i].start_address) + ' by ' + this.findArtistForDirections(route.legs[i].start_address) + '<br>';
+                  summaryPanel.innerHTML += this.findArtworkYearForDirections(route.legs[i].start_address) + '<br>';
+                  summaryPanel.innerHTML += this.findArtworkDescForDirections(route.legs[i].start_address) + '<br>';
                   summaryPanel.innerHTML += '<br>';
                   summaryPanel.innerHTML += '<b>Step ' + routeSegment + ': ' + this.findArtworkForDirections(route.legs[i].start_address) +' to ' + this.findArtworkForDirections(route.legs[i].end_address) + '</b><br>';
                 //   summaryPanel.innerHTML += `<img style={{margin: "3.0625px 3.0625px 0px 0px"}} className="ui avatar image" src={require('../public/imgs/${this.findArtworkForDirections(route.legs[i].start_address).toLowerCase().split(' ').join('_')}.jpg')} alt="artwork"/>`;
@@ -119,6 +122,11 @@ class Map extends Component {
                         summaryPanel.innerHTML += '<li>' + route.legs[i].steps[j].instructions + '</li>';
                     }
               }
+              let lastStep = route.legs[route.legs.length-1].end_address
+                  summaryPanel.innerHTML += '<br><b>Artwork ' + (route.legs.length+1) + ': ' + this.findArtworkForDirections(lastStep) + ' by ' + this.findArtistForDirections(lastStep) + '<br>';
+                  summaryPanel.innerHTML += this.findArtworkYearForDirections(lastStep) + '<br>';
+                  summaryPanel.innerHTML += this.findArtworkDescForDirections(lastStep) + '<br>';
+                  summaryPanel.innerHTML += '<br>';
             } else {
               console.error(`error fetching directions ${result}`);
             }
@@ -130,6 +138,18 @@ class Map extends Component {
     findArtworkForDirections = (routeLegAddress) => {
        return this.props.artworks.find(artwork => artwork.address === routeLegAddress).title
     }
+
+    findArtistForDirections = (routeLegAddress) => {
+        return this.props.artworks.find(artwork => artwork.address === routeLegAddress).artist
+     }
+
+     findArtworkYearForDirections = (routeLegAddress) => {
+        return this.props.artworks.find(artwork => artwork.address === routeLegAddress).year
+     }
+
+     findArtworkDescForDirections = (routeLegAddress) => {
+        return this.props.artworks.find(artwork => artwork.address === routeLegAddress).description
+     }
 
     render() {
         return (
