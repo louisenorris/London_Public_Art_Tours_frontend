@@ -160,7 +160,6 @@ class Map extends Component {
     }
 
     findArtworkForDirections = (routeLegAddress) => {
-        
        return this.state.selectedTour.artworks.find(artwork => artwork.address === routeLegAddress).title
     }
 

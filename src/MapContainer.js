@@ -23,8 +23,6 @@ class MapContainer extends Component {
               artworks={this.props.artworks}
               addToTourBtn={this.props.addToTourBtn}
               handleNewTour={this.props.handleNewTour}
-              // selectedTour={this.props.selectedTour}
-              // selectedTourName={this.props.selectedTourName}
               selectedTourID={this.props.selectedTourID}
             />
             { this.props.selectedTourID ? 
@@ -66,8 +64,10 @@ class MapContainer extends Component {
                   className="searchbar2"
                 />
                 <br/>
-            
-                <br/>
+
+                {this.state.tour_name && this.props.tourInProgress.length ?
+                  <>
+                  <br/>
                 <Button.Group style={{margin: '2px 0px 0px'}} widths="3" color='black'>
                   <Button onClick={() =>
                     this.props.createTour(
@@ -79,6 +79,19 @@ class MapContainer extends Component {
                   <Button onClick={this.props.cancelTour} ><Icon name="cancel" /></Button>
                   <Button onClick={this.props.logOut} ><Icon name="sign-out" /></Button>
                 </Button.Group>
+                  </>
+                  : (
+                  <>
+                  <br/>
+                <Button.Group style={{margin: '2px 0px 0px'}} widths="3" color='black'>
+                  <Button onClick={this.props.cancelTour} ><Icon name="cancel" /></Button>
+                  <Button onClick={() => this.props.showAllArtworks()} as={Link} to="/" exact ><Icon name="home" /></Button>
+                  <Button onClick={this.props.logOut} ><Icon name="sign-out" /></Button>
+                </Button.Group>
+                  </>
+                  )
+                }
+            
               </>
             ) : (
               <>
