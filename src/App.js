@@ -60,8 +60,11 @@ class App extends React.Component {
     API.clearToken()
     this.setState({
       user: null,
-      loginSignupClicked: false})
-    this.props.history.push("/")
+      loginSignupClicked: false,
+      searchTerm: "",
+      selectedTourID: null
+    }, () => this.props.history.push("/"))
+  
   }
 
   updateUser = (event, user) => {
@@ -179,6 +182,7 @@ class App extends React.Component {
           backgroundOpacity: 0.5
         }}>
       < NavBar user={this.state.user} signUp={this.signUp} logIn={this.logIn} handleLoginSignupClicked={this.handleLoginSignupClicked}/>
+      <h2 className="introlight">Please login or sign up</h2>
       </div>
       )
     } else {

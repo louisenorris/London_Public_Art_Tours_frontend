@@ -26,7 +26,7 @@ class Signup extends React.Component {
     render() {
     return (
         <>
-        <h2 className="intro">Sign up to begin your journey</h2>
+        <h2 className="introlight">Sign up to begin your journey</h2>
         <form onSubmit={() => this.props.handleSubmit(this.state)}>
             <br/>
             <input className="loginSignup" value={this.state.username} onChange={this.handleChangeUsername} placeholder='Username' />

@@ -94,7 +94,7 @@ class Map extends Component {
     }
 
     componentDidUpdate(prevProps, prevState){
-        if (prevState !== this.state && this.state.selectedTour) {
+        if (prevState !== this.state && this.state.selectedTour && this.props.selectedTourID) {
             console.log("j")
             const directionsService = new window.google.maps.DirectionsService();
             const directionsRenderer = new window.google.maps.DirectionsRenderer();
@@ -160,7 +160,6 @@ class Map extends Component {
     }
 
     findArtworkForDirections = (routeLegAddress) => {
-        
        return this.state.selectedTour.artworks.find(artwork => artwork.address === routeLegAddress).title
     }
 
