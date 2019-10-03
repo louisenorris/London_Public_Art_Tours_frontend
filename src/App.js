@@ -7,6 +7,9 @@ import MapContainer from './MapContainer.js';
 import NavBar from './NavBar.js';
 import UserContainer from './UserContainer.js';
 import TourContainer from './TourContainer.js';
+import Container from '@material-ui/core/Container';
+import backgroundImg from './London_Map4.png'
+
 
 class App extends React.Component {
 
@@ -17,7 +20,8 @@ class App extends React.Component {
     tourInProgress: [],
     addToTourBtn: false,
     tours: null,
-    selectedTour: null
+    loginSignupClicked: false,
+    selectedTourID: null
   }
   
   componentDidMount() {
@@ -35,6 +39,7 @@ class App extends React.Component {
     .then(tours => {
       this.setState({tours})
     })
+    
   }
 
   // /USER METHODS ///
@@ -53,7 +58,9 @@ class App extends React.Component {
 
   logOut = () => {
     API.clearToken()
-    this.setState({user: null})
+    this.setState({
+      user: null,
+      loginSignupClicked: false})
     this.props.history.push("/")
   }
 
@@ -69,6 +76,10 @@ class App extends React.Component {
     .then(this.logOut())
   }
 
+  handleLoginSignupClicked = () => {
+    this.setState({loginSignupClicked: true})
+  }
+
 
 // /TOUR METHODS ///
 
@@ -79,6 +90,7 @@ class App extends React.Component {
 
   handleNewTour = (artwork) => {
     if (this.state.tourInProgress.includes(artwork)) return
+    if (this.state.tourInProgress.length > 8) return
     this.setState({tourInProgress: [...this.state.tourInProgress, artwork]})
   }
 
@@ -95,33 +107,30 @@ class App extends React.Component {
   }
 
   createTour = (artworks, tourName) => {
-    debugger
     API.createTour(artworks, tourName) 
     .then(data => this.setState({ 
       addToTourBtn: false,
       tourInProgress: [],
-      // user: {
-      //   ...this.state.user, tours: [...this.state.user.tours, data.tour]
-      // }
+      user: {...this.state.user, tours: [...this.state.user.tours, data.tour]},
+      tours: [...this.state.tours, data.tour]
     }))
-    .then(this.props.history.push("/account"))
+    // .then(this.props.history.push("/account"))
   }
 
   // /ARTWORKS ON MAP METHODS ///
 
   handleShowTourOnMap = (tourId) => {
-    const findArtworks = this.state.artworks.filter(artwork => artwork.tour_artworks.find(tour_artwork => tour_artwork.tour_id === tourId))
-    this.setState({selectedTour: findArtworks})
+    this.setState({selectedTourID: tourId})
   }
 
   handleArtworkSearch = (event) => {
-    this.setState({searchTerm: event.target[0].value})
+    this.setState({searchTerm: event.target.value})
   }
 
   showAllArtworks = () => {
     this.setState({
       searchTerm: "",
-      selectedTour: null
+      selectedTourID: null
     })
   } 
 
@@ -135,42 +144,98 @@ class App extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.setState({ loginSignupClicked: false})
+  }
+
+  renderContent = () => {
+    if (this.state.user && !this.state.user.error) {
+      return  <Route exact path='/' component={() => <MapContainer 
+                                                  user={this.state.user} 
+                                                  artworks={this.searchAndFilterArtworks()} 
+                                                  handleArtworkSearch={this.handleArtworkSearch} 
+                                                  searchTerm={this.state.searchTerm} 
+                                                  logOut={this.logOut}
+                                                  showAddToTourBtnOnInfoWin={this.showAddToTourBtnOnInfoWin}
+                                                  addToTourBtn={this.state.addToTourBtn}
+                                                  showAllArtworks={this.showAllArtworks}
+                                                  tours={this.state.tours}
+                                                  handleNewTour={this.handleNewTour}
+                                                  tourInProgress={this.state.tourInProgress}
+                                                  cancelTour={this.cancelTour}
+                                                  handleCancelArtwork={this.handleCancelArtwork}
+                                                  createTour={this.createTour}
+                                                  selectedTourID={this.state.selectedTourID}
+                                                />
+                                              } 
+              />
+    } else if (this.state.loginSignupClicked) {
+      return (
+        <div style={{
+          backgroundImage: "url(" + backgroundImg + ")",
+          backgroundSize: "cover",
+          backgroundPosition: "center center",
+          backgroundRepeat: "no-repeat",
+          backgroundOpacity: 0.5
+        }}>
+      < NavBar user={this.state.user} signUp={this.signUp} logIn={this.logIn} handleLoginSignupClicked={this.handleLoginSignupClicked}/>
+      </div>
+      )
+    } else {
+      return (
+        <>
+          <div style={{
+          backgroundImage: "url(" + backgroundImg + ")",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          height: '100%'
+          }}>
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          < NavBar user={this.state.user} signUp={this.signUp} logIn={this.logIn} handleLoginSignupClicked={this.handleLoginSignupClicked}/>
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <h1 className="introlight">Mapping app to aid navigation around London's public art. Discover ready-made tours or create your own experience.</h1>
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          <br/> 
+          </div>
+          </>
+      )
+    }
+  }
 
   render() {
     return (
-      <div>
-        <h1 className="title">Public Art Tours</h1>   
-        {
-          this.state.user && !this.state.user.error ? (
-            <Route exact path='/' component={() => <MapContainer 
-                                                      user={this.state.user} 
-                                                      artworks={this.searchAndFilterArtworks()} 
-                                                      handleArtworkSearch={this.handleArtworkSearch} 
-                                                      searchTerm={this.state.searchTerm} 
-                                                      logOut={this.logOut}
-                                                      showAddToTourBtnOnInfoWin={this.showAddToTourBtnOnInfoWin}
-                                                      addToTourBtn={this.state.addToTourBtn}
-                                                      showAllArtworks={this.showAllArtworks}
-                                                      tours={this.state.tours}
-                                                      handleNewTour={this.handleNewTour}
-                                                      tourInProgress={this.state.tourInProgress}
-                                                      cancelTour={this.cancelTour}
-                                                      handleCancelArtwork={this.handleCancelArtwork}
-                                                      createTour={this.createTour}
-                                                    />
-                                            } 
-            />
-          ) : (
-            
-            < NavBar user={this.state.user} signUp={this.signUp} logIn={this.logIn} />
-          )
-        }
+      <>
+      <Container maxWidth="sm" style={{height: '100%', marginTop: '5px' }}>
+        <h1 className="title">Public Art London</h1>   
+        {this.renderContent()}
+
         <Route exact path="/login" component={(props) => <Login {...props} handleSubmit={this.logIn} />}/>
         <Route exact path="/signup" component={(props) => <Signup {...props} handleSubmit={this.signUp} />}/> 
-        <Route exact path="/account" component={(props) => <UserContainer {...props} user={this.state.user} updateUser={this.updateUser} deleteUser={this.deleteUser} handleShowTourOnMap={this.handleShowTourOnMap} />} />
-        <Route exact path="/tours" component={(props) => <TourContainer {...props} tours={this.state.tours} artworks={this.state.artworks} handleShowTourOnMap={this.handleShowTourOnMap} />} />
-      </div>
-
+        <Route exact path="/account" component={(props) => <UserContainer {...props} user={this.state.user} updateUser={this.updateUser} deleteUser={this.deleteUser} handleShowTourOnMap={this.handleShowTourOnMap} artworks={this.state.artworks} showAllArtworks={this.showAllArtworks} logOut={this.logOut}/>} />
+        <Route exact path="/tours" component={(props) => <TourContainer {...props} tours={this.state.tours} artworks={this.state.artworks} handleShowTourOnMap={this.handleShowTourOnMap} logOut={this.logOut} showAllArtworks={this.showAllArtworks}/>} />
+      </Container>
+    </>
     )
   }
 }

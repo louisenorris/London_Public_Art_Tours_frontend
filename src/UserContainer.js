@@ -14,9 +14,9 @@ class UserContainer extends Component {
 
     renderContent = () => {
         if (this.props.user && this.state.editClicked) {
-            return <EditUser user={this.props.user} handleEditSubmit={this.props.updateUser}/>
+            return <EditUser user={this.props.user} handleEditSubmit={this.props.updateUser} handleEditClick={this.handleEditClick}/>
         } else if (this.props.user) {
-            return <AccountDetails user={this.props.user} handleEditClick={this.handleEditClick} deleteUser={this.props.deleteUser} handleShowTourOnMap={this.props.handleShowTourOnMap}/>
+            return <AccountDetails user={this.props.user} handleEditClick={this.handleEditClick} deleteUser={this.props.deleteUser} handleShowTourOnMap={this.props.handleShowTourOnMap} artworks={this.props.artworks} showAllArtworks={this.props.showAllArtworks} logOut={this.props.logOut}/>
         } else {
             return <p>user undefined</p>
         }

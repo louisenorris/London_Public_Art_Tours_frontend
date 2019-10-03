@@ -21,5 +21,101 @@ code {
 
 .menu {
   font-family: 'Permanent Marker', cursive;
-  /* font-weight: bold */
+}
+
+.menulighter {
+  font-family: 'Permanent Marker', cursive;
+  font-weight: lighter;
+}
+
+.search {
+  float: right;
+  margin: 20px;
+  background-color: black;
+  color: white
+}
+
+.searchbar {
+  border: 1px solid;
+  border-radius: 4px;
+  width: 100%;
+  height: 30px;
+  margin: 5px 0px 10px;
+  padding-left: 7px;
+}
+
+.searchbar2 {
+  border: 1px solid;
+  border-radius: 4px;
+  width: 100%;
+  height: 30px;
+  margin: 5px 0px 0px;
+  padding-left: 7px;
+}
+
+.instructions {
+  margin: 0px 0px 0px;
+}
+
+.instructions2 {
+  margin: 5px 0px 5px;
+}
+.loginSignup {
+  border: 1px solid;
+  border-radius: 4px;
+  width: 100%;
+  height: 30px;
+  margin: 7px 0;
+  padding-left: 7px;
+}
+
+.nav {
+  text-align: center; 
+  margin: 10px;
+}
+
+.center {
+  max-width: 100%;
+  height: auto;
+}
+
+.intro {
+  font-family: 'Permanent Marker', cursive;
+  text-align: center;
+  color: black
+}
+
+.introlight {
+  font-family: 'Permanent Marker', cursive;
+  text-align: center;
+  color: black;
+  font-weight: lighter;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.Background {
+  background-image: url(./London_Map.png);
+}
+
+.Button {
+  background-color: #212121;
+  color: white;
+  min-width: 400;
+  height: 30px;
+  border-radius: 4px;
+  vertical-align: center;
+  text-align: center;
+}
+
+.directionsimage {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
 }

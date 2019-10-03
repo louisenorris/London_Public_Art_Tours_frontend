@@ -1,5 +1,5 @@
 import React from 'react';
-// import Button from '@material-ui/core/Button';
+import { Button } from 'semantic-ui-react'
 
 
 class Signup extends React.Component {
@@ -25,22 +25,27 @@ class Signup extends React.Component {
 
     render() {
     return (
+        <>
+        <h2 className="intro">Sign up to begin your journey</h2>
         <form onSubmit={() => this.props.handleSubmit(this.state)}>
             <br/>
-            <label>Username</label>
+            <input className="loginSignup" value={this.state.username} onChange={this.handleChangeUsername} placeholder='Username' />
             <br/>
-            <input value={this.state.username} onChange={this.handleChangeUsername} placeholder='Username' />
+            <input className="loginSignup" value={this.state.email} onChange={this.handleChangeEmail} type="email" placeholder='Email' />
             <br/>
-            <label>Email</label>
+            <input className="loginSignup" value={this.state.password} onChange={this.handleChangePassword} type='password' placeholder='Password' />
             <br/>
-            <input value={this.state.email} onChange={this.handleChangeEmail} type="email" placeholder='Email' />
-            <br/>
-            <label>Password</label>
-            <br/>
-            <input value={this.state.password} onChange={this.handleChangePassword}type='password' placeholder='Password' />
-            <br/>
-            <button type='submit'>Sign up</button>
+            <Button style={{maxHeight: '30px', padding: '5px'}} color='black' type='submit'>Sign up</Button>
         </form>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+       
+        {/* <img style={{position: 'relative', width: '100%', bottom: "2.5%"}} className="center" src={require("./london-skyline-isolated-big-hi.png")} alt="london"/> */}
+        </>
     );
     }
 };
