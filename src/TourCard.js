@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Artwork from './Artwork.js'
 import API from './adapters/API.js'
 import { Link } from "react-router-dom";
-import { Button, Icon } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 
 
 class TourCard extends Component {

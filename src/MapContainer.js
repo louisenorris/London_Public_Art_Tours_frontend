@@ -27,13 +27,14 @@ class MapContainer extends Component {
               // selectedTourName={this.props.selectedTourName}
               selectedTourID={this.props.selectedTourID}
             />
-
-            <SearchBar
-              handleArtworkSearch={this.props.handleArtworkSearch}
-              searchTerm={this.props.searchTerm}
-              showAllArtworks={this.props.showAllArtworks}
-            />
-
+            { this.props.selectedTourID ? 
+              null :
+              <SearchBar
+                handleArtworkSearch={this.props.handleArtworkSearch}
+                searchTerm={this.props.searchTerm}
+                showAllArtworks={this.props.showAllArtworks}
+              />
+            }
             {this.props.addToTourBtn ? (
               <>
                 <p className="instructions">
