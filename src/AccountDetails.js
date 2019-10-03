@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Button, Icon } from 'semantic-ui-react'
+import { Button, Icon, List } from 'semantic-ui-react'
 import { Link } from "react-router-dom";
 
 class AccountDetails extends Component {
     render() {
         return (
             <div >
-                <div style={{overflow: 'scroll', height: '56em'}} >
+                <div style={{overflow: 'scroll', height: '54em'}} >
                 {
                     this.props.user ? 
                     <>
@@ -27,12 +27,22 @@ class AccountDetails extends Component {
                     {
                     this.props.user.tours.map(tour => 
                         <>
-                        <Icon name="map outline" />
+                        {/* <Icon name="map outline" /> 
                         <span>{tour.name}</span>
                         <br/>
                         <Button color='black' style={{maxHeight: '30px', padding: '5px', margin: '2px'}} onClick={() => this.props.handleShowTourOnMap(tour.id)} as={Link} to="/" exact >Get directions</Button>
                         <br/>
-                        <br/>
+                        <br/> */}
+
+                        <List divided verticalAlign='middle'>
+                            <List.Item>
+                            <List.Content floated='right'>
+                                <Button color='black' style={{maxHeight: '30px', padding: '5px', margin: '2px'}} onClick={() => this.props.handleShowTourOnMap(tour.id)} as={Link} to="/" exact >Get directions</Button>
+                            </List.Content>
+                            <List.Icon name='marker' />
+                            <List.Content>{tour.name}</List.Content>
+                            </List.Item>  
+                        </List>
                         </>)
                     }
                     </>

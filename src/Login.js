@@ -18,8 +18,8 @@ class Login extends React.Component {
 render(){
     return (
         <>
-        <h2 className="intro">Welcome back!</h2>
-        <h2 className="intro">Log in to continue the adventure</h2>
+        <h2 className="introlight">Welcome back!</h2>
+        <h2 className="introlight">Log in to continue the adventure</h2>
         <form onSubmit={() => this.props.handleSubmit(this.state)}>
         
             <input className="loginSignup" value={this.state.email} onChange={this.handleChangeEmail} placeholder='Email' />
