@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink } from "react-router-dom";
-import { Button, Image, Icon } from 'semantic-ui-react'
+import { Button, Icon } from 'semantic-ui-react'
 import { Link } from "react-router-dom";
 
 class AccountDetails extends Component {
@@ -30,11 +29,6 @@ class AccountDetails extends Component {
                         <>
                         <Icon name="map outline" />
                         <span>{tour.name}</span>
-                        {/* <button onClick={() => this.props.handleShowTourOnMap(tour.id)} >
-                        <NavLink to="/" exact>
-                            Get directions
-                        </NavLink>
-                        </button> */}
                         <br/>
                         <Button color='black' style={{maxHeight: '30px', padding: '5px', margin: '2px'}} onClick={() => this.props.handleShowTourOnMap(tour.id)} as={Link} to="/" exact >Get directions</Button>
                         <br/>

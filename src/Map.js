@@ -127,7 +127,7 @@ class Map extends Component {
               summaryPanel.innerHTML = '';
               // for each route show summary information
               summaryPanel.innerHTML += '<br>';
-              summaryPanel.innerHTML += '<b>Tour: ' + this.state.selectedTour.name + '</b><br><br>';
+              summaryPanel.innerHTML += '<h2 class="introlight" >' + this.state.selectedTour.name + '</h2><br>';
               summaryPanel.innerHTML += '<b>The Route:</b><br>';
               for (let i = 0; i < route.legs.length; i++) {
                   let routeSegment = i + 1;
@@ -160,6 +160,7 @@ class Map extends Component {
     }
 
     findArtworkForDirections = (routeLegAddress) => {
+        
        return this.state.selectedTour.artworks.find(artwork => artwork.address === routeLegAddress).title
     }
 
@@ -187,7 +188,6 @@ class Map extends Component {
                 addToTourBtn={this.props.addToTourBtn}
                 handleNewTour={this.props.handleNewTour}
                 selectedTour={this.state.selectedTour}
-                // selectedTourName={this.props.selectedTourName}
                 directions={this.state.directions}
                 selectedTourID={this.props.selectedTourID}
                 />

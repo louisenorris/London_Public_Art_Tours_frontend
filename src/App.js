@@ -8,7 +8,6 @@ import NavBar from './NavBar.js';
 import UserContainer from './UserContainer.js';
 import TourContainer from './TourContainer.js';
 import Container from '@material-ui/core/Container';
-// import CssBaseline from '@material-ui/core/CssBaseline'; 
 import backgroundImg from './London_Map4.png'
 
 
@@ -112,7 +111,8 @@ class App extends React.Component {
     .then(data => this.setState({ 
       addToTourBtn: false,
       tourInProgress: [],
-      user: {...this.state.user, tours: [...this.state.user.tours, data.tour]}
+      user: {...this.state.user, tours: [...this.state.user.tours, data.tour]},
+      tours: [...this.state.tours, data.tour]
     }))
     // .then(this.props.history.push("/account"))
   }
@@ -165,8 +165,6 @@ class App extends React.Component {
                                                   cancelTour={this.cancelTour}
                                                   handleCancelArtwork={this.handleCancelArtwork}
                                                   createTour={this.createTour}
-                                                  // selectedTour={this.state.selectedTour}
-                                                  // selectedTourName={this.state.selectedTourName}
                                                   selectedTourID={this.state.selectedTourID}
                                                 />
                                               } 
@@ -219,7 +217,6 @@ class App extends React.Component {
           <br/> 
           <br/> 
           <br/> 
-          {/* <img style={{position: 'relative', width: '100%', bottom: "2.5%"}} className="center" src={require("./london-skyline-isolated-big-hi.png")} alt="london"/> */}
           </div>
           </>
       )
@@ -229,7 +226,6 @@ class App extends React.Component {
   render() {
     return (
       <>
-      {/* <CssBaseline /> */}
       <Container maxWidth="sm" style={{height: '100%', marginTop: '5px' }}>
         <h1 className="title">Public Art London</h1>   
         {this.renderContent()}
