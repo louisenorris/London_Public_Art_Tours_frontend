@@ -5,12 +5,19 @@ An interactive map app where users can find public artworks, and use or create L
 
 User stories:
 A user can... 
+
 •	Login/sign up (using JSON Web Tokens and localStorage to store encrypted user information client-side).
+
 •	Edit or delete their account.
+
 •	Browse public art works in London plotted on an interactive map impletedted with Google Maps API.
+
 •	Search the artworks using a DebouncedInput React component.
+
 •	Select public art tours to go on, generating directions via the Google Directions API.
+
 •	Create their own public art tour by selecting artworks and then obtaining directions via the Google Directions API.
+
 •	User created tours are added to the Postgres database and therefore added to the list of available tours on the app.
 
 
