@@ -27,13 +27,6 @@ class AccountDetails extends Component {
                     {
                     this.props.user.tours.map(tour => 
                         <>
-                        {/* <Icon name="map outline" /> 
-                        <span>{tour.name}</span>
-                        <br/>
-                        <Button color='black' style={{maxHeight: '30px', padding: '5px', margin: '2px'}} onClick={() => this.props.handleShowTourOnMap(tour.id)} as={Link} to="/" exact >Get directions</Button>
-                        <br/>
-                        <br/> */}
-
                         <List divided verticalAlign='middle'>
                             <List.Item>
                             <List.Content floated='right'>

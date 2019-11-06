@@ -1,68 +1,89 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Public Art London
 
-## Available Scripts
+An interactive map app where users can find public artworks, and use or create London public walking art tours.
 
-In the project directory, you can run:
+## User stories: 
 
-### `npm start`
+A user can...
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+* Login/sign up (using JSON Web Tokens and localStorage to store encrypted user information client-side).
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+* Edit or delete their account.
 
-### `npm test`
+* Browse public art works in London plotted on an interactive map impletedted with Google Maps API.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* Search the artworks using a DebouncedInput React component.
 
-### `npm run build`
+* Select public art tours to go on, generating directions via the Google Directions API.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* Create their own public art tour by selecting artworks and then obtaining directions via the Google Directions API.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+* User created tours are added to the Postgres database and therefore added to the list of available tours on the app.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Prerequisites
 
-### `npm run eject`
+Make sure you have installed:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+* Ruby, version 2.6.1 or newer
+* Postgres
+* Rails, version 5.2.3 or newer
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+You can check in the terminal:
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+`ruby -v
+rails -v
+postgres -v`
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+This should output some information on the installed versions. If not, you can refer to the [Ruby](https://www.ruby-lang.org/en/documentation/installation/ "Ruby"), [Postgres](https://www.postgresql.org/ "Postgres") and [Rails](https://guides.rubyonrails.org/v5.0/getting_started.html "Rails") documentation.
 
-## Learn More
+You will also need a Google API key for this project. You can get one on the [Google API website](https://cloud.google.com/maps-platform/ "Google API website"). Your project needs to enable the Maps Javascript API,Places API and Geocoding API.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+For the backend repository of this app see https://github.com/louisenorris/London_Public_Art_Tours_backend
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Getting started
 
-### Code Splitting
+Fork and clone this repository and the [backend repository](https://github.com/louisenorris/London_Public_Art_Tours_backend "backend repository"). Start Postgres.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## Installation
 
-### Analyzing the Bundle Size
+### Backend
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+On a terminal window, move into the backend directory of this project. Use the gem manager [bundler](https://bundler.io/ "bundler") to install all dependencies. Create, migrate and seed the database. Start the Rails server. To do all this, run these commands, one at the time.
 
-### Making a Progressive Web App
+`cd backend
+bundle install
+rails db:create
+rails db:migrate
+rails db:seed
+rails start`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+### Frontend
 
-### Advanced Configuration
+On a new terminal tab, navigate to the frontend directory inside the root directory of the project. Use the package manager [npm](https://www.npmjs.com/ "npm") to install all dependencies.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+`cd frontend
+npm install`
 
-### Deployment
+#### Google API
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+Once you have a key it needs to be added to an **.env** file as below where it says 'INSERT_YOUR_API_KEY':
 
-### `npm run build` fails to minify
+`REACT_APP_GOOGLE_API_KEY=INSERT_YOUR_API_KEY_HERE`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Make sure you then add the **.env** file to your **.gitignore** file. Then reference your API key inside the MapWrapped component of the **Map.js** file as follows, then save:
+
+`googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}`}`
+
+Start the server on port 3001.
+
+`npm start`
+
+Visit localhost:3001.
+
+**You're all set!**
+
+## Notes
+
+This app is optimised for mobile use, please change your browser's device settings accordingly.
+
+
