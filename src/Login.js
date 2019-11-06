@@ -33,8 +33,6 @@ render(){
         <br/>
         <br/>
         <br/>
-        {/* <img style={{position: 'relative', width: '100%', bottom: "2.5%"}} className="center" src={require("./london-skyline-isolated-big-hi.png")} alt="london"/> */}
-
         </>
     );
 };

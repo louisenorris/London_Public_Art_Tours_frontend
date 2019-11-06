@@ -25,7 +25,7 @@ class Signup extends React.Component {
 
     render() {
     return (
-        <>
+     <>
         <h2 className="introlight">Sign up to begin your journey</h2>
         <form onSubmit={() => this.props.handleSubmit(this.state)}>
             <br/>
@@ -43,9 +43,7 @@ class Signup extends React.Component {
         <br/>
         <br/>
         <br/>
-       
-        {/* <img style={{position: 'relative', width: '100%', bottom: "2.5%"}} className="center" src={require("./london-skyline-isolated-big-hi.png")} alt="london"/> */}
-        </>
+     </>
     );
     }
 };
