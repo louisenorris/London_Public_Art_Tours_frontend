@@ -4,20 +4,14 @@ An interactive map app where users can find public artworks, and use or create L
 
 ## User stories: 
 
-A user can...
+A user can:
 
 * Login/sign up (using JSON Web Tokens and localStorage to store encrypted user information client-side).
-
 * Edit or delete their account.
-
 * Browse public art works in London plotted on an interactive map impletedted with Google Maps API.
-
 * Search the artworks using a DebouncedInput React component.
-
 * Select public art tours to go on, generating directions via the Google Directions API.
-
 * Create their own public art tour by selecting artworks and then obtaining directions via the Google Directions API.
-
 * User created tours are added to the Postgres database and therefore added to the list of available tours on the app.
 
 ## Prerequisites
@@ -30,9 +24,11 @@ Make sure you have installed:
 
 You can check in the terminal:
 
-`ruby -v
+```bash
+ruby -v
 rails -v
-postgres -v`
+postgres -v
+```
 
 This should output some information on the installed versions. If not, you can refer to the [Ruby](https://www.ruby-lang.org/en/documentation/installation/ "Ruby"), [Postgres](https://www.postgresql.org/ "Postgres") and [Rails](https://guides.rubyonrails.org/v5.0/getting_started.html "Rails") documentation.
 
@@ -50,19 +46,19 @@ Fork and clone this repository and the [backend repository](https://github.com/l
 
 On a terminal window, move into the backend directory of this project. Use the gem manager [bundler](https://bundler.io/ "bundler") to install all dependencies. Create, migrate and seed the database. Start the Rails server. To do all this, run these commands, one at the time.
 
-`cd backend
+```bash
 bundle install
 rails db:create
 rails db:migrate
 rails db:seed
-rails start`
+rails start
+```
 
 ### Frontend
 
 On a new terminal tab, navigate to the frontend directory inside the root directory of the project. Use the package manager [npm](https://www.npmjs.com/ "npm") to install all dependencies.
 
-`cd frontend
-npm install`
+`npm install`
 
 #### Google API
 
