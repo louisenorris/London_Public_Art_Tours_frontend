@@ -68,7 +68,9 @@ Once you have a key it needs to be added to an **.env** file as below where it s
 
 Make sure you then add the **.env** file to your **.gitignore** file. Then reference your API key inside the MapWrapped component of the **Map.js** file as follows, then save:
 
-`googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}`}`
+```bash
+googleMapURL={`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}`}
+```
 
 Start the server on port 3001.
 
