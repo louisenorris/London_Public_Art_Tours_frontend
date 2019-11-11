@@ -18,6 +18,7 @@ class SearchBar extends Component {
                     className="searchbar"
                     />
                 <br/>
+                <br/>
             </div>
         );
     }
