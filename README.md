@@ -2,6 +2,8 @@
 
 An interactive map app where users can find public artworks, and use or create London public walking art tours.
 
+![](public-art-london-gif.gif)
+
 ## User stories: 
 
 A user can:
