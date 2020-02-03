@@ -9,9 +9,9 @@ const NavBar = (props) => {
         return (
               <Container style={{ textAlign: 'center'}} maxWidth="sm">
                 <br/> 
-                <Button color='black' style={{ margin: '20px', fontFamily: 'Permanent Marker', fontWeight: 'lighter', minWidth: 200, maxHeight: '30px', padding: '5px'}} onClick={() => props.handleLoginSignupClicked()} as={Link} to="/signup" exact >Sign up</Button>
+                <Button color='black' style={{ margin: '20px', fontFamily: 'Permanent Marker', fontWeight: 'lighter', minWidth: 200, maxHeight: '30px', padding: '5px'}} onClick={() => props.handleLoginSignupClicked()} as={Link} to="/signup" exact="true" >Sign up</Button>
                
-                <Button color='black' style={{ margin: '20px', fontFamily: 'Permanent Marker', fontWeight: 'lighter', minWidth: 200, maxHeight: '30px', padding: '5px'}} onClick={() => props.handleLoginSignupClicked()} as={Link} to="/login" exact >Login</Button>
+                <Button color='black' style={{ margin: '20px', fontFamily: 'Permanent Marker', fontWeight: 'lighter', minWidth: 200, maxHeight: '30px', padding: '5px'}} onClick={() => props.handleLoginSignupClicked()} as={Link} to="/login" exact="true" >Login</Button>
                 <br/>
               </Container>
              
