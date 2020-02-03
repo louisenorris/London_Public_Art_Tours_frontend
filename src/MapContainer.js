@@ -85,7 +85,7 @@ class MapContainer extends Component {
                   <br/>
                 <Button.Group style={{margin: '2px 0px 0px'}} widths="3" color='black'>
                   <Button onClick={this.props.cancelTour} ><Icon name="cancel" /></Button>
-                  <Button onClick={() => this.props.showAllArtworks()} as={Link} to="/" exact ><Icon name="home" /></Button>
+                  <Button onClick={() => this.props.showAllArtworks()} as={Link} to="/" exact="true" ><Icon name="home" /></Button>
                   <Button onClick={this.props.logOut} ><Icon name="sign-out" /></Button>
                 </Button.Group>
                   </>
@@ -97,9 +97,9 @@ class MapContainer extends Component {
                 (
                 <>
                   <Button.Group widths="4" color='black'>
-                    <Button as={Link} to="/account" exact ><Icon name="user circle outline" /></Button>
-                    <Button onClick={() => this.props.showAllArtworks()} as={Link} to="/" exact ><Icon name="home" /></Button>
-                    <Button as={Link} to="/tours" exact ><Icon name="map" /></Button>
+                    <Button as={Link} to="/account" exact="true" ><Icon name="user circle outline" /></Button>
+                    <Button onClick={() => this.props.showAllArtworks()} as={Link} to="/" exact="true" ><Icon name="home" /></Button>
+                    <Button as={Link} to="/tours" exact="true" ><Icon name="map" /></Button>
                     <Button onClick={this.props.logOut} ><Icon name="sign-out" /></Button>
                   </Button.Group>
                 </>
@@ -107,9 +107,9 @@ class MapContainer extends Component {
                 <>
                   <Button.Group widths="5" color='black'>
                     <Button onClick={() => this.props.showAddToTourBtnOnInfoWin()} ><Icon name="add circle" /></Button>
-                    <Button as={Link} to="/account" exact ><Icon name="user circle outline" /></Button>
-                    <Button onClick={() => this.props.showAllArtworks()} as={Link} to="/" exact ><Icon name="home" /></Button>
-                    <Button as={Link} to="/tours" exact ><Icon name="map" /></Button>
+                    <Button as={Link} to="/account" exact="true" ><Icon name="user circle outline" /></Button>
+                    <Button onClick={() => this.props.showAllArtworks()} as={Link} to="/" exact="true" ><Icon name="home" /></Button>
+                    <Button as={Link} to="/tours" exact="true" ><Icon name="map" /></Button>
                     <Button onClick={this.props.logOut} ><Icon name="sign-out" /></Button>
                   </Button.Group>
                 </>

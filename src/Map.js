@@ -45,7 +45,7 @@ function GoogleMapRender(props) {
                 <h3>{selectedArtwork.title}</h3>
                 <p>{selectedArtwork.artist}</p>
                 <p>{selectedArtwork.year}</p>
-                <img class="ui bottom aligned tiny image" src={require(`../public/imgs/${selectedArtwork.title.toLowerCase().split(' ').join('_')}.jpg`)} alt="artwork"/>
+                <img className="ui bottom aligned tiny image" src={require(`../public/imgs/${selectedArtwork.title.toLowerCase().split(' ').join('_')}.jpg`)} alt="artwork"/>
                 {
                     props.addToTourBtn ? 
                     <button onClick={() => props.handleNewTour(selectedArtwork)} >Add to tour</button>
@@ -81,12 +81,13 @@ class Map extends Component {
         this.state = {
             directions: null,
             selectedTour: null
-        }
+        };
+        this.directionsPanel = React.createRef();
     }
 
     handleNewShowTourOnMap = (selectedTourID) => {
         API.getSelectedTour(selectedTourID)
-        .then(data => this.setState({selectedTour: data.tour}, () => console.log("g"))
+        .then(data => this.setState({selectedTour: data.tour}, () => console.log("showing selected tour"))
     )}
 
     componentDidMount() {
@@ -95,14 +96,19 @@ class Map extends Component {
 
     componentDidUpdate(prevProps, prevState){
         if (prevState !== this.state && this.state.selectedTour && this.props.selectedTourID) {
-            console.log("j")
+            // console.log("showing tour directions")
             const directionsService = new window.google.maps.DirectionsService();
             const directionsRenderer = new window.google.maps.DirectionsRenderer();
             const wholeTour = this.state.selectedTour.artworks
+            // console.log("tour's artwors", wholeTour) 
             const lastInTour = wholeTour[wholeTour.length-1]
+            // console.log("last artwork", lastInTour)
             const origin = { lat: wholeTour[0].lat, lng: wholeTour[0].lng };
+            // console.log("first artwork", wholeTour[0])
             const destination = { lat: lastInTour.lat, lng: lastInTour.lng };
             const middleArtworks = wholeTour.slice(1, -1)
+            // console.log("rest of artworks", middleArtworks)
+
             const waypointArtworks = middleArtworks.map(wp => { return { 
                 location: new window.google.maps.LatLng(wp.lat, wp.lng),
                 stopover: true }  
@@ -123,7 +129,9 @@ class Map extends Component {
             //   directionsRenderer.setPanel(document.getElementById('directionsPanel'))
               directionsRenderer.setDirections(result);
               const route = result.routes[0];
-              const summaryPanel = document.getElementById('directionsPanel');
+              const summaryPanel = this.directionsPanel.current;
+            //   const summaryPanel = document.getElementById('directionsPanel');
+            console.log("summary panel", summaryPanel.innerHTML)
               summaryPanel.innerHTML = '';
               // for each route show summary information
               summaryPanel.innerHTML += '<br>';
@@ -160,7 +168,11 @@ class Map extends Component {
     }
 
     findArtworkForDirections = (routeLegAddress) => {
-       return this.state.selectedTour.artworks.find(artwork => artwork.address === routeLegAddress).title
+        // console.log('artwork lookup', routeLegAddress)
+
+        const artwork = this.state.selectedTour.artworks.find(artwork => artwork.address === routeLegAddress)
+        // console.log('artwork found', artwork)
+        return artwork.title
     }
 
     findArtistForDirections = (routeLegAddress) => {
@@ -190,7 +202,8 @@ class Map extends Component {
                 directions={this.state.directions}
                 selectedTourID={this.props.selectedTourID}
                 />
-                <div id='directionsPanel'></div> 
+                {/* <div id='directionsPanel'></div>  */}
+                <div ref={this.directionsPanel}></div>
             </div>
         );
     }

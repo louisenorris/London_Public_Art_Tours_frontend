@@ -27,13 +27,14 @@ class TourCard extends Component {
               <h3 className="menulighter">{this.props.tour.name}</h3>
                 {
                   this.props.tour.tour_artworks.map(tour_artwork => <Artwork 
+                                                                        key={tour_artwork.id}
                                                                         tour_artwork={tour_artwork} 
                                                                         artworks={this.props.artworks} 
                                                                     />)
                 }
                 {this.state.tourCreator ? (`Created by: ${this.state.tourCreator}`) : null}
                 <br/>
-                <Button color='black' style={{maxHeight: '30px', padding: '5px'}} onClick={() => this.props.handleShowTourOnMap(this.props.tour.id)} as={Link} to="/" exact >Get directions</Button>
+                <Button color='black' style={{maxHeight: '30px', padding: '5px'}} onClick={() => this.props.handleShowTourOnMap(this.props.tour.id)} as={Link} to="/" exact="true" >Get directions</Button>
                 <br/>
                 <br/>
             </div>
