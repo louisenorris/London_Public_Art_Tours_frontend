@@ -96,19 +96,13 @@ class Map extends Component {
 
     componentDidUpdate(prevProps, prevState){
         if (prevState !== this.state && this.state.selectedTour && this.props.selectedTourID) {
-            // console.log("showing tour directions")
             const directionsService = new window.google.maps.DirectionsService();
             const directionsRenderer = new window.google.maps.DirectionsRenderer();
-            const wholeTour = this.state.selectedTour.artworks
-            // console.log("tour's artwors", wholeTour) 
-            const lastInTour = wholeTour[wholeTour.length-1]
-            // console.log("last artwork", lastInTour)
+            const wholeTour = this.state.selectedTour.artworks;
+            const lastInTour = wholeTour[wholeTour.length-1];
             const origin = { lat: wholeTour[0].lat, lng: wholeTour[0].lng };
-            // console.log("first artwork", wholeTour[0])
             const destination = { lat: lastInTour.lat, lng: lastInTour.lng };
-            const middleArtworks = wholeTour.slice(1, -1)
-            // console.log("rest of artworks", middleArtworks)
-
+            const middleArtworks = wholeTour.slice(1, -1);
             const waypointArtworks = middleArtworks.map(wp => { return { 
                 location: new window.google.maps.LatLng(wp.lat, wp.lng),
                 stopover: true }  
@@ -126,12 +120,10 @@ class Map extends Component {
               this.setState({
                 directions: result
               });
-            //   directionsRenderer.setPanel(document.getElementById('directionsPanel'))
               directionsRenderer.setDirections(result);
               const route = result.routes[0];
               const summaryPanel = this.directionsPanel.current;
-            //   const summaryPanel = document.getElementById('directionsPanel');
-            console.log("summary panel", summaryPanel.innerHTML)
+            
               summaryPanel.innerHTML = '';
               // for each route show summary information
               summaryPanel.innerHTML += '<br>';
@@ -202,7 +194,6 @@ class Map extends Component {
                 directions={this.state.directions}
                 selectedTourID={this.props.selectedTourID}
                 />
-                {/* <div id='directionsPanel'></div>  */}
                 <div ref={this.directionsPanel}></div>
             </div>
         );
