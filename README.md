@@ -46,7 +46,7 @@ Fork and clone this repository and the [backend repository](https://github.com/l
 
 ### Backend
 
-On a terminal window, move into the backend directory of this project. Use the gem manager [bundler](https://bundler.io/ "bundler") to install all dependencies. Create, migrate and seed the database. Start the Rails server. To do all this, run these commands, one at the time.
+On a terminal window, move into the backend directory of this project. Use the gem manager [bundler](https://bundler.io/ "bundler") to install all dependencies. Create, migrate and seed the database. Start the Rails server. To do all this, run these commands, one at a time.
 
 ```bash
 bundle install

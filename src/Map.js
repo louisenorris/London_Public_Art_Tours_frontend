@@ -87,7 +87,7 @@ class Map extends Component {
 
     handleNewShowTourOnMap = (selectedTourID) => {
         API.getSelectedTour(selectedTourID)
-        .then(data => this.setState({selectedTour: data.tour}, () => console.log("showing selected tour"))
+        .then(data => this.setState({selectedTour: data.tour}, () => console.log("showing selected tour",  data.tour))
     )}
 
     componentDidMount() {
@@ -160,10 +160,10 @@ class Map extends Component {
     }
 
     findArtworkForDirections = (routeLegAddress) => {
-        // console.log('artwork lookup', routeLegAddress)
-
+        console.log('artwork lookup', routeLegAddress)
+        console.log('route leg address', routeLegAddress)
         const artwork = this.state.selectedTour.artworks.find(artwork => artwork.address === routeLegAddress)
-        // console.log('artwork found', artwork)
+        console.log('artwork found', artwork)
         return artwork.title
     }
 
