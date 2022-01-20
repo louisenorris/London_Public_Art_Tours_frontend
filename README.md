@@ -2,6 +2,12 @@
 
 An interactive map app where users can find public artworks, and use or create London public walking art tours.
 
+* Utilized JSON Web Tokens and localStorage to store encrypted user information client-side, providing user authentication.
+* Applied Google Maps and Directions APIs to map public art in London and create tours with step by step directions for users.
+* Developed a Rails API backend with endpoints for users, artworks and tours.
+* Implemented a smooth user interface with React, and specifically Router for navigation and Semantic for styling.
+
+
 ![](public-art-london-gif.gif)
 
 ## User stories: 
